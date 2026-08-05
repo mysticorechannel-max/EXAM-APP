@@ -1,0 +1,35 @@
+const ACCESS_TOKEN_KEY = 'access_token';
+const REFRESH_TOKEN_KEY = 'refresh_token';
+const USER_KEY = 'user';
+function getValidToken() {
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    if (!token || token === 'undefined' || token === 'null' || token.length < 10) {
+        return null;
+    }
+    return token;
+}
+export const authService = {
+    saveAuthData(data) {
+        if (!data?.accessToken || data.accessToken.length < 10) {
+            return;
+        }
+        localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
+        if (data.refreshToken && data.refreshToken.length > 5) {
+            localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
+        }
+        if (data.user) {
+            localStorage.setItem(USER_KEY, JSON.stringify(data.user));
+        }
+    },
+    clearAuthData() {
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.removeItem(REFRESH_TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
+    },
+    getAccessToken() {
+        return getValidToken();
+    },
+    isAuthenticated() {
+        return !!getValidToken();
+    },
+};
