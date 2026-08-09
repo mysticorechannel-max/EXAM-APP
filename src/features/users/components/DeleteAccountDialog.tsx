@@ -26,9 +26,9 @@ export function DeleteAccountDialog({ open, onClose }: DeleteAccountDialogProps)
             />
 
             {/* Dialog */}
-            <div className="relative z-10 w-full max-w-[400px] rounded-xl bg-white p-6 shadow-xl">
+            <div className="relative z-10 w-full max-w-[400px] bg-white p-6 shadow-xl">
                 {/* Warning icon */}
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-50">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center bg-red-50">
                     <AlertTriangle className="h-6 w-6 text-[#DC2626]" />
                 </div>
 
@@ -44,7 +44,7 @@ export function DeleteAccountDialog({ open, onClose }: DeleteAccountDialogProps)
                         onClick={onClose}
                         disabled={deleteAccountMutation.isPending}
                         className={cn(
-                            'h-[40px] flex-1 rounded-lg border border-gray-300 font-[Geist_Mono] text-[13px] font-medium text-gray-700 xl:h-[46px] xl:text-[14px]',
+                            'h-[40px] flex-1 border border-gray-300 font-[Geist_Mono] text-[13px] font-medium text-gray-700 xl:h-[46px] xl:text-[14px]',
                             'hover:bg-gray-50 transition-colors',
                             'disabled:opacity-70 disabled:cursor-not-allowed'
                         )}
@@ -56,7 +56,7 @@ export function DeleteAccountDialog({ open, onClose }: DeleteAccountDialogProps)
                         onClick={handleDelete}
                         disabled={deleteAccountMutation.isPending}
                         className={cn(
-                            'h-[40px] flex-1 rounded-lg bg-[#DC2626] font-[Geist_Mono] text-[13px] font-medium text-white xl:h-[46px] xl:text-[14px]',
+                            'h-[40px] flex-1 bg-[#DC2626] font-[Geist_Mono] text-[13px] font-medium text-white xl:h-[46px] xl:text-[14px]',
                             'flex items-center justify-center',
                             'hover:bg-[#B91C1C] transition-colors',
                             'disabled:opacity-70 disabled:cursor-not-allowed'

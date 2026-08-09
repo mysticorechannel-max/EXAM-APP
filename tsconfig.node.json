@@ -17,6 +17,7 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "composite": true,
+        "noEmit": true,
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
     },
     "include": [

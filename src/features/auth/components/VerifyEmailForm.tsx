@@ -63,7 +63,7 @@ export function VerifyEmailForm() {
             <h1 className="mb-1 font-sans text-[24px] font-bold text-foreground xl:text-[30px]">
                 Create Account
             </h1>
-            <p className="mb-4 font-[Geist_Mono] text-[14px] font-semibold text-[#155DFC] xl:text-[16px]">
+            <p className="mb-4 font-sans text-[24px] font-bold text-[#155DFC]">
                 Verify OTP
             </p>
             <p className="mb-6 font-[Geist_Mono] text-[13px] text-muted-foreground xl:mb-8 xl:text-[14px]">

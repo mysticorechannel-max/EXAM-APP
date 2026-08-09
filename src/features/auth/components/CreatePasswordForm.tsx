@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, X } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Spinner } from '@/shared/components';
 import { createPasswordSchema, type CreatePasswordFormData } from '../schemas/create-password.schema';
@@ -28,11 +28,18 @@ export function CreatePasswordForm() {
         mutation.mutate(data);
     };
 
-    const apiErrorMessage = mutation.error
-        ? isApiError(mutation.error)
-            ? mutation.error.message
-            : 'Something went wrong'
-        : null;
+    const apiError =
+        mutation.error && isApiError(mutation.error) ? mutation.error : null;
+
+    const apiErrorMessage = apiError
+        ? apiError.fieldErrors && apiError.fieldErrors.length > 0
+            ? apiError.fieldErrors
+                .map((fe) => (fe.field ? `${fe.field}: ${fe.message}` : fe.message))
+                .join(' | ')
+            : apiError.message
+        : mutation.error
+            ? 'Something went wrong'
+            : null;
 
     return (
         <div className="w-full max-w-[380px] xl:max-w-[452px]">
@@ -42,7 +49,7 @@ export function CreatePasswordForm() {
             <h1 className="mb-1 font-sans text-[24px] font-bold text-foreground xl:text-[30px]">
                 Create Account
             </h1>
-            <p className="mb-6 font-[Geist_Mono] text-[13px] font-semibold text-[#155DFC] xl:mb-8 xl:text-[14px]">
+            <p className="mb-4 font-[Geist_Mono] text-[13px] font-bold text-[#155DFC] xl:mb-6 xl:text-[14px]">
                 Create a strong password
             </p>
 
@@ -65,7 +72,7 @@ export function CreatePasswordForm() {
                             className={cn(
                                 'h-[40px] w-full rounded-lg border border-gray-200 p-[10px] pr-12 font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
                                 'placeholder:text-muted-foreground',
-                                'focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600',
+                                'focus:outline-none focus:border-[#E2E8F0]',
                                 'disabled:cursor-not-allowed disabled:opacity-50',
                                 errors.password && 'border-destructive'
                             )}
@@ -74,10 +81,10 @@ export function CreatePasswordForm() {
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-[10px] top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            className="absolute right-[10px] top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                             aria-label={showPassword ? 'Hide password' : 'Show password'}
                         >
-                            {showPassword ? <EyeOff className="h-[18px] w-[18px] xl:h-5 xl:w-5" /> : <Eye className="h-[18px] w-[18px] xl:h-5 xl:w-5" />}
+                            {showPassword ? <Eye className="h-[18px] w-[18px] xl:h-5 xl:w-5" /> : <EyeOff className="h-[18px] w-[18px] xl:h-5 xl:w-5" />}
                         </button>
                     </div>
                     {errors.password && (
@@ -105,7 +112,7 @@ export function CreatePasswordForm() {
                             className={cn(
                                 'h-[40px] w-full rounded-lg border border-gray-200 p-[10px] pr-12 font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
                                 'placeholder:text-muted-foreground',
-                                'focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600',
+                                'focus:outline-none focus:border-[#E2E8F0]',
                                 'disabled:cursor-not-allowed disabled:opacity-50',
                                 errors.confirmPassword && 'border-destructive'
                             )}
@@ -114,10 +121,10 @@ export function CreatePasswordForm() {
                         <button
                             type="button"
                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                            className="absolute right-[10px] top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            className="absolute right-[10px] top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                             aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                         >
-                            {showConfirmPassword ? <EyeOff className="h-[18px] w-[18px] xl:h-5 xl:w-5" /> : <Eye className="h-[18px] w-[18px] xl:h-5 xl:w-5" />}
+                            {showConfirmPassword ? <Eye className="h-[18px] w-[18px] xl:h-5 xl:w-5" /> : <EyeOff className="h-[18px] w-[18px] xl:h-5 xl:w-5" />}
                         </button>
                     </div>
                     {errors.confirmPassword && (
@@ -131,7 +138,7 @@ export function CreatePasswordForm() {
                 {apiErrorMessage && (
                     <div className="relative rounded-lg border border-[#DC2626] bg-white px-4 pt-5 pb-3">
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-[#DC2626]">
-                            <AlertCircle className="h-3.5 w-3.5 text-[#DC2626]" />
+                            <X className="h-3.5 w-3.5 text-[#DC2626]" />
                         </div>
                         <p className="text-center font-[Geist_Mono] text-[12px] font-medium text-[#DC2626] xl:text-[13px]">
                             {apiErrorMessage}

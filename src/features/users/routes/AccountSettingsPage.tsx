@@ -1,17 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { User, Lock, LogOut, ChevronLeft } from 'lucide-react';
+import { LogOut, ChevronLeft, User } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { authService } from '@/features/auth/services/auth.service';
 import { ProfileForm } from '../components/ProfileForm';
 import { ChangePasswordForm } from '../components/ChangePasswordForm';
+import circleUserIcon from '../../../lucide/circle-user-round.svg';
+import lockIcon from '../../../lucide/lock.svg';
 
 type Tab = 'profile' | 'change-password';
-
-const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
-    { id: 'profile', label: 'Profile', icon: User },
-    { id: 'change-password', label: 'Change Password', icon: Lock },
-];
 
 export function AccountSettingsPage() {
     const [activeTab, setActiveTab] = useState<Tab>('profile');
@@ -28,57 +25,67 @@ export function AccountSettingsPage() {
             <p className="font-[Geist_Mono] text-sm text-gray-500">Account</p>
 
             {/* Blue banner header with separate back button */}
-            <div className="flex items-stretch gap-2">
+            <div className="flex items-stretch gap-3">
                 <Link
                     to="/dashboard/diplomas"
-                    className="flex w-[48px] items-center justify-center border border-[#155DFC] text-[#155DFC] hover:bg-blue-50"
+                    className="flex w-[45px] items-center justify-center border border-[#155DFC] text-[#155DFC] hover:bg-blue-50"
                 >
                     <ChevronLeft className="h-5 w-5" />
                 </Link>
                 <div className="flex flex-1 items-center gap-3 bg-[#155DFC] px-6 py-4">
-                    <User className="h-6 w-6 text-white" />
-                    <h1 className="font-[Geist_Mono] text-[14px] font-normal text-white">
+                    <User className="h-7 w-7 text-white" />
+                    <h1 className="font-sans text-[24px] font-bold text-white">
                         Account Settings
                     </h1>
                 </div>
             </div>
 
             {/* Content area: left sub-nav + right form */}
-            <div className="flex flex-col gap-4 lg:flex-row">
-                {/* Left sub-nav */}
-                <div className="flex w-full flex-col lg:min-h-[400px] lg:w-[180px] lg:shrink-0">
-                    <div className="flex flex-col gap-1">
-                        {tabs.map((tab) => (
-                            <button
-                                key={tab.id}
-                                type="button"
-                                onClick={() => setActiveTab(tab.id)}
-                                className={cn(
-                                    'flex items-center gap-3 rounded-lg px-3 py-2.5 text-left font-[Geist_Mono] text-[13px] font-medium transition-colors xl:text-[14px]',
-                                    activeTab === tab.id
-                                        ? 'text-[#155DFC]'
-                                        : 'text-gray-700 hover:text-gray-900'
-                                )}
-                            >
-                                <tab.icon className="h-4 w-4" />
-                                {tab.label}
-                            </button>
-                        ))}
+            <div className="flex flex-col lg:flex-row">
+                {/* Left sub-nav - 234px, border-right */}
+                <div className="flex w-full flex-col border-r border-gray-200 lg:min-h-[713px] lg:w-[234px] lg:shrink-0">
+                    <div className="flex flex-col gap-1 pt-2">
+                        <button
+                            type="button"
+                            onClick={() => setActiveTab('profile')}
+                            className={cn(
+                                'flex items-center gap-3 px-4 py-2.5 text-left font-[Geist_Mono] text-sm font-medium transition-colors',
+                                activeTab === 'profile'
+                                    ? 'bg-blue-50 text-[#155DFC]'
+                                    : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                            )}
+                        >
+                            <img src={circleUserIcon} alt="" className="h-5 w-5" />
+                            Profile
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setActiveTab('change-password')}
+                            className={cn(
+                                'flex items-center gap-3 px-4 py-2.5 text-left font-[Geist_Mono] text-sm font-medium transition-colors',
+                                activeTab === 'change-password'
+                                    ? 'bg-blue-50 text-[#155DFC]'
+                                    : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                            )}
+                        >
+                            <img src={lockIcon} alt="" className="h-5 w-5" />
+                            Change Password
+                        </button>
                     </div>
 
                     {/* Logout button - at bottom */}
                     <button
                         type="button"
                         onClick={handleLogout}
-                        className="mt-auto flex items-center gap-3 rounded-lg px-3 py-2.5 text-left font-[Geist_Mono] text-[13px] font-medium text-[#DC2626] transition-colors hover:bg-red-50 xl:text-[14px]"
+                        className="mt-auto flex items-center gap-3 bg-[#FEF2F2] px-4 py-2.5 text-left font-[Geist_Mono] text-sm font-medium text-[#DC2626] transition-colors hover:bg-red-100"
                     >
-                        <LogOut className="h-4 w-4 -scale-x-100" />
+                        <LogOut className="h-5 w-5 -scale-x-100" />
                         Logout
                     </button>
                 </div>
 
-                {/* Right content - no border wrapper like Figma */}
-                <div className="flex-1">
+                {/* Right content - white bg, padding 24px, gap 16px */}
+                <div className="flex-1 bg-white p-6">
                     {activeTab === 'profile' && <ProfileForm />}
                     {activeTab === 'change-password' && <ChangePasswordForm />}
                 </div>

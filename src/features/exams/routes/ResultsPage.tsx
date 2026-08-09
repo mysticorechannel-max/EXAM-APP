@@ -1,5 +1,6 @@
 import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
-import { ChevronLeft, HelpCircle, RotateCcw, GraduationCap } from 'lucide-react';
+import { ChevronLeft, HelpCircle, RotateCcw } from 'lucide-react';
+import folderSearchIcon from '../../../lucide/folder-search.svg';
 import type { Question } from '@/features/questions/types/question.types';
 import type { AnalyticsItem } from '../types/submission.types';
 
@@ -40,15 +41,20 @@ export function ResultsPage() {
         );
     }
 
-    const { submission, analytics, questions, userAnswers } = state;
+    const { submission, analytics, userAnswers } = state;
+    const questions = state.questions ?? [];
     const examTitle = submission.examTitle || submission.exam?.title || 'Exam';
     const total = submission.totalQuestions;
     const correct = submission.correctAnswers;
     const wrong = submission.wrongAnswers;
 
-    // Donut chart
-    const radius = 60;
-    const circumference = 2 * Math.PI * radius;
+    // Donut chart - matching Figma (203x203 viewBox, thick ring)
+    const chartSize = 203;
+    const chartCenter = chartSize / 2;
+    const outerR = 82;
+    const strokeW = 38;
+    const chartRadius = outerR - strokeW / 2; // center of stroke
+    const circumference = 2 * Math.PI * chartRadius;
     const correctPercent = total > 0 ? (correct / total) * 100 : 0;
     const correctStroke = (correctPercent / 100) * circumference;
     const wrongStroke = circumference - correctStroke;
@@ -56,16 +62,16 @@ export function ResultsPage() {
     return (
         <div className="flex flex-col gap-4">
             {/* Blue banner with separate back button */}
-            <div className="flex items-stretch gap-2">
+            <div className="flex items-stretch gap-3">
                 <Link
                     to="/dashboard/diplomas"
-                    className="flex w-[48px] items-center justify-center border border-[#155DFC] text-[#155DFC] hover:bg-blue-50"
+                    className="flex w-[45px] items-center justify-center border border-[#155DFC] text-[#155DFC] hover:bg-blue-50"
                 >
                     <ChevronLeft className="h-5 w-5" />
                 </Link>
                 <div className="flex flex-1 items-center gap-3 bg-[#155DFC] px-6 py-4">
-                    <HelpCircle className="h-6 w-6 text-white" />
-                    <h1 className="font-[Geist_Mono] text-[14px] font-semibold text-white">
+                    <HelpCircle className="h-8 w-8 text-white" />
+                    <h1 className="font-sans text-[24px] font-bold text-white">
                         {examTitle} Questions
                     </h1>
                 </div>
@@ -89,42 +95,41 @@ export function ResultsPage() {
             {/* Content: Chart + Questions */}
             <div className="flex flex-col gap-4 lg:flex-row">
                 {/* Left: Donut chart */}
-                <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-6 lg:w-[280px] lg:shrink-0">
-                    <svg width="160" height="160" viewBox="0 0 160 160">
-                        <circle cx="80" cy="80" r={radius} fill="none" stroke="#e5e7eb" strokeWidth="16" />
+                <div className="flex flex-col items-center justify-center bg-[#EFF6FF] p-8 lg:w-[350px] lg:shrink-0">
+                    <svg width="203" height="203" viewBox="0 0 203 203">
+                        <circle cx={chartCenter} cy={chartCenter} r={chartRadius} fill="none" stroke="#e5e7eb" strokeWidth={strokeW} />
                         <circle
-                            cx="80" cy="80" r={radius} fill="none"
-                            stroke="#22c55e" strokeWidth="16"
+                            cx={chartCenter} cy={chartCenter} r={chartRadius} fill="none"
+                            stroke="#00BC7D" strokeWidth={strokeW}
                             strokeDasharray={`${correctStroke} ${circumference}`}
-                            strokeDashoffset="0" strokeLinecap="round"
-                            transform="rotate(-90 80 80)"
+                            strokeDashoffset="0"
+                            transform={`rotate(-90 ${chartCenter} ${chartCenter})`}
                         />
                         {wrong > 0 && (
                             <circle
-                                cx="80" cy="80" r={radius} fill="none"
-                                stroke="#ef4444" strokeWidth="16"
+                                cx={chartCenter} cy={chartCenter} r={chartRadius} fill="none"
+                                stroke="#ef4444" strokeWidth={strokeW}
                                 strokeDasharray={`${wrongStroke} ${circumference}`}
                                 strokeDashoffset={`-${correctStroke}`}
-                                strokeLinecap="round"
-                                transform="rotate(-90 80 80)"
+                                transform={`rotate(-90 ${chartCenter} ${chartCenter})`}
                             />
                         )}
                     </svg>
                     {/* Legend */}
-                    <div className="mt-4 flex flex-col gap-2">
+                    <div className="mt-6 flex flex-col gap-2">
                         <div className="flex items-center gap-2">
-                            <div className="h-3 w-3 rounded-sm bg-green-500" />
+                            <div className="h-4 w-4 bg-[#00BC7D]" />
                             <span className="font-[Geist_Mono] text-sm text-gray-700">Correct: {correct}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div className="h-3 w-3 rounded-sm bg-red-500" />
+                            <div className="h-4 w-4 bg-red-500" />
                             <span className="font-[Geist_Mono] text-sm text-gray-700">Incorrect: {wrong}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Right: Questions review */}
-                <div className="max-h-[400px] flex-1 overflow-y-auto rounded-xl border border-gray-200 bg-white p-4">
+                <div className="max-h-[400px] flex-1 overflow-y-auto rounded-xl border border-dashed border-gray-300 bg-white p-4">
                     <div className="flex flex-col gap-4">
                         {analytics && analytics.length > 0 ? (
                             analytics.map((item) => (
@@ -133,17 +138,17 @@ export function ResultsPage() {
                                         {item.questionText}
                                     </p>
                                     {/* Selected answer */}
-                                    <div className={`flex items-center gap-2 rounded-lg px-3 py-2 ${item.isCorrect ? 'bg-green-50' : 'bg-red-50'
+                                    <div className={`flex items-center gap-2 px-3 py-2 ${item.isCorrect ? 'bg-green-50' : 'bg-red-50'
                                         }`}>
-                                        <div className={`h-3 w-3 rounded-full ${item.isCorrect ? 'bg-green-500' : 'bg-red-500'}`} />
+                                        <div className={`h-3 w-3 ${item.isCorrect ? 'bg-green-500' : 'bg-red-500'}`} style={{ borderRadius: '50%' }} />
                                         <span className="font-[Geist_Mono] text-xs text-gray-700">
                                             {item.selectedAnswer?.text || 'No answer'}
                                         </span>
                                     </div>
                                     {/* Correct answer if wrong */}
                                     {!item.isCorrect && item.correctAnswer && (
-                                        <div className="flex items-center gap-2 rounded-lg bg-green-50 px-3 py-2">
-                                            <div className="h-3 w-3 rounded-full border-2 border-gray-300" />
+                                        <div className="flex items-center gap-2 bg-green-50 px-3 py-2">
+                                            <div className="h-3 w-3 border-2 border-gray-300" style={{ borderRadius: '50%' }} />
                                             <span className="font-[Geist_Mono] text-xs text-gray-700">
                                                 {item.correctAnswer.text}
                                             </span>
@@ -153,26 +158,27 @@ export function ResultsPage() {
                             ))
                         ) : (
                             questions.map((question) => {
+                                const answerOptions = question.answers ?? [];
                                 const userAnswer = userAnswers[question.id];
-                                const correctAnswer = question.answers.find(a => a.isCorrect);
+                                const correctAnswer = answerOptions.find(a => a.isCorrect);
                                 const isCorrect = userAnswer === correctAnswer?.id;
-                                const selectedAnswer = question.answers.find(a => a.id === userAnswer);
+                                const selectedAnswer = answerOptions.find(a => a.id === userAnswer);
 
                                 return (
                                     <div key={question.id} className="flex flex-col gap-2">
                                         <p className="font-[Geist_Mono] text-sm font-bold text-[#155DFC]">
                                             {question.text}
                                         </p>
-                                        <div className={`flex items-center gap-2 rounded-lg px-3 py-2 ${isCorrect ? 'bg-green-50' : 'bg-red-50'
+                                        <div className={`flex items-center gap-2 px-3 py-2 ${isCorrect ? 'bg-green-50' : 'bg-red-50'
                                             }`}>
-                                            <div className={`h-3 w-3 rounded-full ${isCorrect ? 'bg-green-500' : 'bg-red-500'}`} />
+                                            <div className={`h-3 w-3 ${isCorrect ? 'bg-green-500' : 'bg-red-500'}`} style={{ borderRadius: '50%' }} />
                                             <span className="font-[Geist_Mono] text-xs text-gray-700">
                                                 {selectedAnswer?.text || 'No answer'}
                                             </span>
                                         </div>
                                         {!isCorrect && correctAnswer && (
-                                            <div className="flex items-center gap-2 rounded-lg bg-green-50 px-3 py-2">
-                                                <div className="h-3 w-3 rounded-full border-2 border-gray-300" />
+                                            <div className="flex items-center gap-2 bg-green-50 px-3 py-2">
+                                                <div className="h-3 w-3 border-2 border-gray-300" style={{ borderRadius: '50%' }} />
                                                 <span className="font-[Geist_Mono] text-xs text-gray-700">
                                                     {correctAnswer.text}
                                                 </span>
@@ -191,7 +197,7 @@ export function ResultsPage() {
                 <button
                     type="button"
                     onClick={() => navigate(`/dashboard/exams/${examId}/quiz`, { replace: true })}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-50 py-3 font-[Geist_Mono] text-sm font-medium text-gray-600 hover:bg-gray-100"
+                    className="flex flex-1 items-center justify-center gap-2 border border-gray-200 bg-gray-50 py-3 font-[Geist_Mono] text-sm font-medium text-gray-600 hover:bg-gray-100"
                 >
                     <RotateCcw className="h-4 w-4" />
                     Restart
@@ -199,9 +205,9 @@ export function ResultsPage() {
                 <button
                     type="button"
                     onClick={() => navigate('/dashboard/diplomas', { replace: true })}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#155DFC] py-3 font-[Geist_Mono] text-sm font-medium text-white hover:bg-blue-700"
+                    className="flex flex-1 items-center justify-center gap-2 bg-[#155DFC] py-3 font-[Geist_Mono] text-sm font-medium text-white hover:bg-blue-700"
                 >
-                    <GraduationCap className="h-4 w-4" />
+                    <img src={folderSearchIcon} alt="" className="h-4 w-4" />
                     Explore
                 </button>
             </div>

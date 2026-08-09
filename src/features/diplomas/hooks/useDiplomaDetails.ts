@@ -1,17 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { diplomasApi } from '../apis/diplomas.api';
+import { unwrapField } from '@/shared/api/unwrap-response';
+import type { Diploma } from '../types/diploma.types';
 
 export function useDiplomaDetails(id: string) {
     return useQuery({
         queryKey: ['diplomas', id],
-        queryFn: async () => {
+        queryFn: async (): Promise<Diploma> => {
             const res = await diplomasApi.getById(id);
-            // Handle both wrapped ({ payload: { diploma } }) and unwrapped ({ diploma }) response
-            const data = res.data as any;
-            if (data.payload?.diploma) return data.payload.diploma;
-            if (data.payload) return data.payload;
-            if (data.diploma) return data.diploma;
-            return data;
+            return unwrapField<Diploma>(res.data, 'diploma');
         },
         enabled: !!id,
     });

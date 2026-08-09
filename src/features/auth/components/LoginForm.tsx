@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/shared/utils';
 import { Spinner } from '@/shared/components';
@@ -35,11 +35,11 @@ export function LoginForm() {
 
     return (
         <div className="w-full max-w-[380px] xl:max-w-[452px]">
-            <h1 className="mb-6 font-sans text-[24px] font-bold text-foreground xl:mb-8 xl:text-[30px]">
+            <h1 className="mb-4 font-sans text-[24px] font-bold text-foreground xl:mb-6 xl:text-[30px]">
                 Login
             </h1>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 xl:gap-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 xl:gap-4">
                 {/* Username */}
                 <div className="flex flex-col gap-1.5">
                     <label
@@ -118,15 +118,15 @@ export function LoginForm() {
                     </Link>
                 </div>
 
-                {/* Global API error alert */}
-                {apiErrorMessage && (
-                    <div className="relative rounded-lg border border-[#DC2626] bg-white px-4 pt-5 pb-3">
+                {/* Global error alert */}
+                {(apiErrorMessage || Object.keys(errors).length > 0) && (
+                    <div className="relative rounded-lg border border-[#DC2626] bg-[#FEF2F2] px-4 pt-5 pb-3">
                         {/* Icon centered on top border */}
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-[#DC2626]">
-                            <AlertCircle className="h-3.5 w-3.5 text-[#DC2626]" />
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-white">
+                            <XCircle className="h-6 w-6 text-[#DC2626]" />
                         </div>
                         <p className="text-center font-[Geist_Mono] text-[12px] font-medium text-[#DC2626] xl:text-[13px]">
-                            {apiErrorMessage}
+                            {apiErrorMessage || 'Something went wrong'}
                         </p>
                     </div>
                 )}

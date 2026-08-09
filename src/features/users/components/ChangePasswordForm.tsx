@@ -66,7 +66,7 @@ export function ChangePasswordForm() {
                         placeholder="••••••••"
                         {...register('currentPassword')}
                         className={cn(
-                            'h-[40px] w-full rounded-lg border p-[10px] pr-12 font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
+                            'h-[40px] w-full border p-[10px] pr-12 font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
                             'placeholder:text-muted-foreground',
                             'focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600',
                             'disabled:cursor-not-allowed disabled:opacity-50',
@@ -109,7 +109,7 @@ export function ChangePasswordForm() {
                         placeholder="••••••••"
                         {...register('newPassword')}
                         className={cn(
-                            'h-[40px] w-full rounded-lg border p-[10px] pr-12 font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
+                            'h-[40px] w-full border p-[10px] pr-12 font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
                             'placeholder:text-muted-foreground',
                             'focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600',
                             'disabled:cursor-not-allowed disabled:opacity-50',
@@ -152,7 +152,7 @@ export function ChangePasswordForm() {
                         placeholder="••••••••"
                         {...register('confirmPassword')}
                         className={cn(
-                            'h-[40px] w-full rounded-lg border p-[10px] pr-12 font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
+                            'h-[40px] w-full border p-[10px] pr-12 font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
                             'placeholder:text-muted-foreground',
                             'focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600',
                             'disabled:cursor-not-allowed disabled:opacity-50',
@@ -182,7 +182,7 @@ export function ChangePasswordForm() {
 
             {/* API error banner */}
             {apiErrorMessage && (
-                <div className="relative rounded-lg border border-[#DC2626] bg-white px-4 pt-5 pb-3">
+                <div className="relative border border-[#DC2626] bg-white px-4 pt-5 pb-3">
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-[#DC2626]">
                         <AlertCircle className="h-3.5 w-3.5 text-[#DC2626]" />
                     </div>
@@ -197,7 +197,7 @@ export function ChangePasswordForm() {
                 type="submit"
                 disabled={changePasswordMutation.isPending}
                 className={cn(
-                    'h-[46px] w-full rounded-lg bg-[#155DFC] font-[Geist_Mono] text-[14px] font-medium text-white',
+                    'h-[46px] w-full bg-[#155DFC] font-[Geist_Mono] text-[14px] font-medium text-white',
                     'flex items-center justify-center',
                     'hover:bg-[#1250D4] transition-colors',
                     'disabled:opacity-70 disabled:cursor-not-allowed'

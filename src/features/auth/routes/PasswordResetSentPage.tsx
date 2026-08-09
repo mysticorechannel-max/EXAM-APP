@@ -21,7 +21,7 @@ export default function PasswordResetSentPage() {
                 </button>
 
                 {/* Title */}
-                <h1 className="mb-3 font-sans text-[28px] font-bold text-foreground xl:text-[36px]">
+                <h1 className="mb-3 font-sans text-[22px] font-bold text-foreground xl:text-[24px]">
                     Password Reset Sent
                 </h1>
 
@@ -38,12 +38,12 @@ export default function PasswordResetSentPage() {
                     Please check your inbox and follow the instructions to reset your password.
                 </p>
 
-                <p className="mb-8 font-[Geist_Mono] text-[13px] leading-relaxed text-muted-foreground/70 xl:text-[14px]">
+                <p className="mb-4 font-[Geist_Mono] text-[13px] leading-relaxed text-muted-foreground/70 xl:text-[14px]">
                     If you don&apos;t see the email within a few minutes, check your spam or junk folder.
                 </p>
 
                 {/* Footer */}
-                <p className="text-center font-[Geist_Mono] text-[13px] font-medium text-muted-foreground xl:text-[14px]">
+                <p className="font-[Geist_Mono] text-[13px] font-medium text-muted-foreground xl:text-[14px]">
                     Don&apos;t have an account?{' '}
                     <Link to="/auth/register" className="text-[#155DFC] hover:underline">
                         Create yours

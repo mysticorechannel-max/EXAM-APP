@@ -33,11 +33,13 @@ export interface AnalyticsItem {
     correctAnswer: { id: string; text: string };
 }
 
+export interface SubmitExamResult {
+    submission: Submission;
+    analytics: AnalyticsItem[];
+}
+
 export interface SubmitExamResponse {
     status: boolean;
     code: number;
-    payload: {
-        submission: Submission;
-        analytics: AnalyticsItem[];
-    };
+    payload: SubmitExamResult;
 }

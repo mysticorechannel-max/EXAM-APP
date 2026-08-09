@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
-import { GraduationCap, ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
+import bookOpenCheckIcon from '../../../lucide/book-open-check.svg';
 import { Spinner } from '@/shared/components';
 import { useDiplomaDetails } from '../hooks/useDiplomaDetails';
 import { useExams } from '@/features/exams/hooks/useExams';
@@ -61,9 +62,9 @@ export function DiplomaDetailsPage() {
                 >
                     <ChevronLeft className="h-5 w-5" />
                 </Link>
-                <div className="flex flex-1 items-center gap-3 bg-[#155DFC] px-6 py-4">
-                    <GraduationCap className="h-6 w-6 text-white" />
-                    <h1 className="font-[Geist_Mono] text-[14px] font-normal text-white">
+                <div className="flex flex-1 items-center gap-3 bg-[#155DFC] px-4 py-3">
+                    <img src={bookOpenCheckIcon} alt="" className="h-7 w-7 brightness-0 invert" />
+                    <h1 className="font-sans text-[20px] font-semibold text-white">
                         {diploma.title} Exams
                     </h1>
                 </div>

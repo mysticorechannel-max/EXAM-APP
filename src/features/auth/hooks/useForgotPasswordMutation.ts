@@ -9,10 +9,12 @@ export function useForgotPasswordMutation() {
     return useMutation({
         mutationFn: async (data: ForgotPasswordRequest) => {
             const res = await authApi.forgotPassword(data);
-            // If backend returns success but indicates email not found
-            if (res.data && (res.data as { success?: boolean }).success === false) {
-                throw { message: 'Email not found. Please check and try again.', status: 404, code: 'EMAIL_NOT_FOUND' };
+            const responseData = res.data as { success?: boolean };
+
+            if (responseData.success === false) {
+                throw new Error('Email not found. Please check and try again.');
             }
+
             return res.data;
         },
         onSuccess: (_data, variables) => {

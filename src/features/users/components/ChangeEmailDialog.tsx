@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { X } from 'lucide-react';
+import { toast } from 'sonner';
 import { Spinner } from '@/shared/components';
 import { apiClient } from '@/shared/api';
 import { useQueryClient } from '@tanstack/react-query';
@@ -114,7 +115,9 @@ export function ChangeEmailDialog({ open, onClose }: ChangeEmailDialogProps) {
         try {
             await apiClient.post('/users/email/request', { newEmail: email });
             setCountdown(60);
-        } catch { /* ignore */ }
+        } catch {
+            toast.error('Failed to resend verification code');
+        }
         finally { setLoading(false); }
     };
 
@@ -122,18 +125,18 @@ export function ChangeEmailDialog({ open, onClose }: ChangeEmailDialogProps) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="relative w-full max-w-[480px] rounded-2xl bg-white p-8 shadow-xl">
+            <div className="relative w-full max-w-[480px] bg-white p-8 shadow-xl">
                 {/* Close button */}
                 <button
                     type="button"
                     onClick={onClose}
-                    className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+                    className="absolute right-6 top-6 text-gray-400 hover:text-gray-600"
                 >
                     <X className="h-5 w-5" />
                 </button>
 
                 {/* Progress indicator */}
-                <div className="mb-6 flex items-center">
+                <div className="mt-4 mb-6 flex items-center">
                     <div className={`h-3 w-3 rotate-45 border-2 ${step === 'email' ? 'border-[#155DFC] bg-[#155DFC]' : 'border-[#155DFC] bg-[#155DFC]'}`} />
                     <div className={`h-0 flex-1 border-t-2 border-dashed ${step === 'otp' ? 'border-[#155DFC]' : 'border-[#155DFC]'}`} />
                     <div className={`h-3 w-3 rotate-45 border-2 ${step === 'otp' ? 'border-[#155DFC] bg-[#155DFC]' : 'border-[#155DFC] bg-white'}`} />
@@ -143,7 +146,7 @@ export function ChangeEmailDialog({ open, onClose }: ChangeEmailDialogProps) {
 
                 {step === 'email' ? (
                     <>
-                        <p className="mb-5 text-[16px] font-semibold text-[#155DFC]">
+                        <p className="mb-5 font-sans text-[24px] font-bold text-[#155DFC]">
                             Enter your new email
                         </p>
                         <label className="mb-2 block text-[14px] font-bold text-gray-900">Email</label>
@@ -152,15 +155,15 @@ export function ChangeEmailDialog({ open, onClose }: ChangeEmailDialogProps) {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="user@example.com"
-                            className="mb-6 h-[50px] w-full rounded-xl border border-gray-200 px-4 font-[Geist_Mono] text-[14px] text-gray-700 placeholder:text-gray-400 focus:border-[#155DFC] focus:outline-none focus:ring-2 focus:ring-blue-100"
+                            className="mb-6 h-[50px] w-full border-0 bg-gray-50 px-4 font-[Geist_Mono] text-[14px] text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
                         />
                         {error && <p className="mb-3 text-center text-xs text-red-500">{error}</p>}
-                        <div className="-mx-8 -mb-8 rounded-b-2xl bg-gray-50 px-8 py-5">
+                        <div className="-mx-8 -mb-8 bg-gray-50 px-8 py-5">
                             <button
                                 type="button"
                                 onClick={handleRequestEmail}
                                 disabled={loading}
-                                className="flex h-[50px] w-full items-center justify-center rounded-full bg-[#155DFC] text-[14px] font-semibold text-white hover:bg-blue-700 disabled:opacity-70"
+                                className="flex h-[50px] w-full items-center justify-center bg-[#155DFC] text-[14px] font-semibold text-white hover:bg-blue-700 disabled:opacity-70"
                             >
                                 {loading ? <Spinner size="sm" className="text-white" /> : 'Next  >'}
                             </button>
@@ -168,7 +171,7 @@ export function ChangeEmailDialog({ open, onClose }: ChangeEmailDialogProps) {
                     </>
                 ) : (
                     <>
-                        <p className="mb-1 text-[16px] font-semibold text-[#155DFC]">
+                        <p className="mb-1 font-sans text-[24px] font-bold text-[#155DFC]">
                             Verify OTP
                         </p>
                         <p className="mb-1 text-[13px] text-gray-500">
@@ -194,7 +197,7 @@ export function ChangeEmailDialog({ open, onClose }: ChangeEmailDialogProps) {
                                     onChange={(e) => handleOtpChange(i, e.target.value)}
                                     onKeyDown={(e) => handleOtpKeyDown(i, e)}
                                     onPaste={handleOtpPaste}
-                                    className="h-[42px] w-[42px] rounded-lg border border-gray-200 text-center text-[14px] font-bold text-gray-900 focus:border-[#155DFC] focus:outline-none focus:ring-2 focus:ring-blue-100"
+                                    className="h-[42px] w-[42px] border-0 bg-gray-50 text-center text-[14px] font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-100"
                                 />
                             ))}
                         </div>
@@ -210,12 +213,12 @@ export function ChangeEmailDialog({ open, onClose }: ChangeEmailDialogProps) {
                         </p>
 
                         {error && <p className="mb-3 text-center text-xs text-red-500">{error}</p>}
-                        <div className="-mx-8 -mb-8 rounded-b-2xl bg-gray-50 px-8 py-5">
+                        <div className="-mx-8 -mb-8 bg-gray-50 px-8 py-5">
                             <button
                                 type="button"
                                 onClick={handleVerifyOtp}
                                 disabled={loading}
-                                className="flex h-[50px] w-full items-center justify-center rounded-full bg-[#155DFC] text-[14px] font-semibold text-white hover:bg-blue-700 disabled:opacity-70"
+                                className="flex h-[50px] w-full items-center justify-center bg-[#155DFC] text-[14px] font-semibold text-white hover:bg-blue-700 disabled:opacity-70"
                             >
                                 {loading ? <Spinner size="sm" className="text-white" /> : 'Verify Code'}
                             </button>

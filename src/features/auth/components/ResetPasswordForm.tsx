@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, X } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { cn } from '@/shared/utils';
 import { Spinner } from '@/shared/components';
@@ -54,8 +54,8 @@ export function ResetPasswordForm() {
             <h1 className="mb-2 font-sans text-[24px] font-bold text-foreground xl:text-[30px]">
                 Create a New Password
             </h1>
-            <p className="mb-6 font-[Geist_Mono] text-[13px] text-muted-foreground xl:mb-8 xl:text-[14px]">
-                Enter your new password below.
+            <p className="mb-4 font-[Geist_Mono] text-[13px] text-muted-foreground xl:mb-6 xl:text-[14px]">
+                Create a new strong password for your account.
             </p>
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 xl:gap-5">
@@ -65,7 +65,7 @@ export function ResetPasswordForm() {
                         htmlFor="password"
                         className="font-[Geist_Mono] text-[13px] font-medium text-foreground xl:text-[14px]"
                     >
-                        New Password<span className="ml-0.5 text-[#DC2626]">*</span>
+                        New Password
                     </label>
                     <div className="relative">
                         <input
@@ -104,7 +104,7 @@ export function ResetPasswordForm() {
                         htmlFor="confirmPassword"
                         className="font-[Geist_Mono] text-[13px] font-medium text-foreground xl:text-[14px]"
                     >
-                        Confirm Password<span className="ml-0.5 text-[#DC2626]">*</span>
+                        Confirm New Password
                     </label>
                     <div className="relative">
                         <input
@@ -141,7 +141,7 @@ export function ResetPasswordForm() {
                 {apiErrorMessage && (
                     <div className="relative rounded-lg border border-[#DC2626] bg-white px-4 pt-5 pb-3">
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-[#DC2626]">
-                            <AlertCircle className="h-3.5 w-3.5 text-[#DC2626]" />
+                            <X className="h-3.5 w-3.5 text-[#DC2626]" />
                         </div>
                         <p className="text-center font-[Geist_Mono] text-[12px] font-medium text-[#DC2626] xl:text-[13px]">
                             {apiErrorMessage}

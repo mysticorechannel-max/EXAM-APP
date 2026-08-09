@@ -1,16 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { examsApi } from '../apis/exams.api';
+import { unwrapField } from '@/shared/api/unwrap-response';
+import type { Exam } from '../types/exam.types';
 
-export function useExamDetails(id: string) {
+export function useExamDetails(examId: string) {
     return useQuery({
-        queryKey: ['exams', id],
-        queryFn: async () => {
-            const res = await examsApi.getById(id);
-            const data = res.data as any;
-            if (data.payload?.exam) return data.payload.exam;
-            if (data.exam) return data.exam;
-            return data;
+        queryKey: ['exams', examId],
+        queryFn: async (): Promise<Exam> => {
+            const res = await examsApi.getById(examId);
+            return unwrapField<Exam>(res.data, 'exam');
         },
-        enabled: !!id,
+        enabled: !!examId,
     });
 }

@@ -120,9 +120,9 @@ export function PhoneInput({
         <div className={cn('relative', className)} ref={dropdownRef}>
             <div
                 className={cn(
-                    'flex h-[46px] w-full items-center rounded-lg border bg-background font-[Geist_Mono] text-[14px]',
-                    hasError ? 'border-destructive' : 'border-gray-200',
-                    'focus-within:ring-2 focus-within:ring-blue-600/20 focus-within:border-blue-600',
+                    'flex h-[46px] w-full items-center border-0 bg-gray-50 font-[Geist_Mono] text-[14px]',
+                    hasError ? 'ring-1 ring-destructive' : '',
+                    'focus-within:ring-2 focus-within:ring-blue-600/20',
                     disabled && 'opacity-50 cursor-not-allowed'
                 )}
             >
@@ -131,7 +131,7 @@ export function PhoneInput({
                     type="button"
                     onClick={() => !disabled && setOpen(!open)}
                     disabled={disabled}
-                    className="flex items-center gap-2 border-r border-gray-200 px-3 h-full hover:bg-gray-50 rounded-l-lg transition-colors"
+                    className="flex items-center gap-2 border-r border-gray-200 px-3 h-full hover:bg-gray-50 transition-colors"
                 >
                     <img
                         src={flagUrl(selectedCountry.code)}

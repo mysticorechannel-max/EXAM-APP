@@ -12,7 +12,7 @@ interface ExamsListProps {
 export function ExamsList({ exams, isLoading, isError, refetch }: ExamsListProps) {
     if (isLoading) {
         return (
-            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+            <div className="flex flex-col gap-[10px]">
                 {Array.from({ length: 5 }).map((_, i) => (
                     <ExamCardSkeleton key={i} />
                 ))}
@@ -46,13 +46,14 @@ export function ExamsList({ exams, isLoading, isError, refetch }: ExamsListProps
     }
 
     return (
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div className="flex flex-col gap-[10px]">
             {exams.map((exam) => (
                 <ExamCard key={exam.id} exam={exam} />
             ))}
-            <div className="border-t border-gray-200 px-4 py-3 text-center">
-                <p className="text-xs text-gray-400">End of list</p>
-            </div>
+            {/* End of list indicator */}
+            <p className="py-3 text-center text-[12px] text-gray-400">
+                End of list
+            </p>
         </div>
     );
 }

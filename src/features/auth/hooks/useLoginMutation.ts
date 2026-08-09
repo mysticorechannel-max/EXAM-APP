@@ -14,7 +14,7 @@ export function useLoginMutation() {
 
             // The backend wraps in { status, code, payload }.
             // payload may have { accessToken } or { token }.
-            const payload = raw.payload as unknown as Record<string, unknown>;
+            const payload = (raw.payload ?? {}) as unknown as Record<string, unknown>;
 
             const accessToken =
                 (payload.accessToken as string) ??

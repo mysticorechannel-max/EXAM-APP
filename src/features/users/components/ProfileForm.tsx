@@ -49,10 +49,28 @@ export function ProfileForm() {
 
     useEffect(() => {
         if (profile) {
+            // Convert local phone format to E.164 for PhoneInput
+            let phone = (profile.phone || '').trim();
+            // If API returns empty/null phone, try localStorage backup
+            if (!phone || phone === 'null' || phone === 'undefined') {
+                phone = localStorage.getItem('user_phone') || '';
+            }
+            if (phone && !phone.startsWith('+')) {
+                // Handle Egyptian phone numbers
+                if (phone.startsWith('0')) {
+                    phone = '+2' + phone; // 01280041976 -> +201280041976
+                } else if (phone.length === 10 && phone.startsWith('1')) {
+                    phone = '+20' + phone; // 1280041976 -> +201280041976
+                } else if (phone.length === 11 && phone.startsWith('01')) {
+                    phone = '+2' + phone; // 01280041976 -> +201280041976
+                } else {
+                    phone = '+20' + phone; // fallback: assume Egyptian
+                }
+            }
             reset({
                 firstName: profile.firstName,
                 lastName: profile.lastName,
-                phone: profile.phone || '',
+                phone,
             });
         }
     }, [profile, reset]);
@@ -75,6 +93,12 @@ export function ProfileForm() {
         }
         updateProfileMutation.mutate(payload, {
             onSuccess: () => {
+                // Save phone to localStorage as backup since API may not return it
+                if (data.phone) {
+                    localStorage.setItem('user_phone', data.phone);
+                } else {
+                    localStorage.removeItem('user_phone');
+                }
                 toast.success('Profile updated successfully.');
             },
         });
@@ -112,11 +136,11 @@ export function ProfileForm() {
                             placeholder="John"
                             {...register('firstName')}
                             className={cn(
-                                'h-[40px] w-full rounded-lg border p-[10px] font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
+                                'h-[40px] w-full border-0 p-[10px] font-[Geist_Mono] text-[13px] bg-gray-50 xl:h-[46px] xl:text-[14px]',
                                 'placeholder:text-muted-foreground',
-                                'focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600',
+                                'focus:outline-none focus:ring-2 focus:ring-blue-600/20',
                                 'disabled:cursor-not-allowed disabled:opacity-50',
-                                errors.firstName ? 'border-destructive' : 'border-input'
+                                errors.firstName ? 'ring-1 ring-destructive' : ''
                             )}
                             disabled={updateProfileMutation.isPending}
                         />
@@ -140,11 +164,11 @@ export function ProfileForm() {
                             placeholder="Doe"
                             {...register('lastName')}
                             className={cn(
-                                'h-[40px] w-full rounded-lg border p-[10px] font-[Geist_Mono] text-[13px] bg-background xl:h-[46px] xl:text-[14px]',
+                                'h-[40px] w-full border-0 p-[10px] font-[Geist_Mono] text-[13px] bg-gray-50 xl:h-[46px] xl:text-[14px]',
                                 'placeholder:text-muted-foreground',
-                                'focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600',
+                                'focus:outline-none focus:ring-2 focus:ring-blue-600/20',
                                 'disabled:cursor-not-allowed disabled:opacity-50',
-                                errors.lastName ? 'border-destructive' : 'border-input'
+                                errors.lastName ? 'ring-1 ring-destructive' : ''
                             )}
                             disabled={updateProfileMutation.isPending}
                         />
@@ -170,7 +194,7 @@ export function ProfileForm() {
                         value={profile?.username || getStoredUserField('username')}
                         readOnly
                         tabIndex={-1}
-                        className="h-[40px] w-full rounded-lg border border-gray-200 bg-gray-100 p-[10px] font-[Geist_Mono] text-[13px] text-gray-600 cursor-default select-none xl:h-[46px] xl:text-[14px]"
+                        className="h-[40px] w-full border-0 bg-gray-100 p-[10px] font-[Geist_Mono] text-[13px] text-gray-600 cursor-default select-none xl:h-[46px] xl:text-[14px]"
                     />
                 </div>
 
@@ -189,7 +213,7 @@ export function ProfileForm() {
                         readOnly
                         tabIndex={-1}
                         onClick={() => setEmailDialogOpen(true)}
-                        className="h-[40px] w-full rounded-lg border border-gray-200 bg-gray-100 p-[10px] font-[Geist_Mono] text-[13px] text-gray-600 cursor-pointer select-none xl:h-[46px] xl:text-[14px] hover:border-[#155DFC]"
+                        className="h-[40px] w-full border-0 bg-gray-100 p-[10px] font-[Geist_Mono] text-[13px] text-gray-600 cursor-pointer select-none xl:h-[46px] xl:text-[14px] hover:bg-gray-200"
                     />
                 </div>
 
@@ -222,7 +246,7 @@ export function ProfileForm() {
 
                 {/* API error banner */}
                 {apiErrorMessage && (
-                    <div className="relative rounded-lg border border-[#DC2626] bg-white px-4 pt-5 pb-3">
+                    <div className="relative border border-[#DC2626] bg-white px-4 pt-5 pb-3">
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-[#DC2626]">
                             <AlertCircle className="h-3.5 w-3.5 text-[#DC2626]" />
                         </div>
@@ -238,7 +262,7 @@ export function ProfileForm() {
                         type="button"
                         onClick={() => setDeleteDialogOpen(true)}
                         className={cn(
-                            'h-[40px] flex-1 rounded-lg border border-[#DC2626] font-[Geist_Mono] text-[13px] font-medium text-[#DC2626] xl:h-[46px] xl:text-[14px]',
+                            'h-[40px] flex-1 border border-[#DC2626] font-[Geist_Mono] text-[13px] font-medium text-[#DC2626] xl:h-[46px] xl:text-[14px]',
                             'hover:bg-red-50 transition-colors'
                         )}
                     >
@@ -248,7 +272,7 @@ export function ProfileForm() {
                         type="submit"
                         disabled={updateProfileMutation.isPending}
                         className={cn(
-                            'h-[46px] flex-1 rounded-lg bg-[#155DFC] font-[Geist_Mono] text-[14px] font-medium text-white',
+                            'h-[46px] flex-1 bg-[#155DFC] font-[Geist_Mono] text-[14px] font-medium text-white',
                             'flex items-center justify-center',
                             'hover:bg-[#1250D4] transition-colors',
                             'disabled:opacity-70 disabled:cursor-not-allowed'
