@@ -5,7 +5,6 @@ import { useExamDetails } from '@/features/exams/hooks/useExamDetails';
 import { useQuestions } from '@/features/questions/hooks/useQuestions';
 import { useDeleteExam, useToggleExamImmutable } from '../hooks/useAdminExamMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
-import { ExamSortDropdown } from '../components/ExamSortDropdown';
 import banIcon from '../../../lucideAdmin/ban.svg';
 import penLineIcon from '../../../lucideAdmin/pen-line.svg';
 import trash2Icon from '../../../lucideAdmin/trash-2.svg';
@@ -20,7 +19,6 @@ export function AdminExamViewPage() {
     const immutableMutation = useToggleExamImmutable();
 
     const [deleteModal, setDeleteModal] = useState(false);
-    const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
     const [questionActionId, setQuestionActionId] = useState<string | null>(null);
 
     if (isLoading) {
@@ -164,7 +162,7 @@ export function AdminExamViewPage() {
                     <span className="font-[Geist_Mono] text-sm font-semibold text-white">Exam Questions</span>
                     <button
                         type="button"
-                        onClick={() => navigate(`/admin/exams/${exam.id}/edit`)}
+                        onClick={() => navigate(`/admin/exams/${exam.id}/questions/new`)}
                         className="font-[Geist_Mono] text-sm text-white hover:underline"
                     >
                         + Add Questions
@@ -193,9 +191,9 @@ export function AdminExamViewPage() {
                             <div className="flex justify-end">
                                 <button
                                     type="button"
-                                    onClick={() => setQuestionActionId(questionActionId === question.id ? null : question.id)}
-                                    className="flex h-[30px] w-[30px] items-center justify-center border border-[#E5E7EB] bg-[#E5E7EB] text-gray-400 hover:text-gray-600"
-                                    aria-label="Actions"
+                                    onClick={() => navigate(`/admin/exams/${exam.id}/questions/${question.id}`)}
+                                    className="flex h-[30px] w-[30px] items-center justify-center border border-[#E5E7EB] bg-[#E5E7EB] text-gray-700 hover:text-gray-900"
+                                    aria-label="View question"
                                 >
                                     <MoreHorizontal className="h-4 w-4" />
                                 </button>

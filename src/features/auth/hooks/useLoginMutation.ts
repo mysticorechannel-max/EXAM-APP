@@ -36,7 +36,12 @@ export function useLoginMutation() {
         onSuccess: (tokens) => {
             authService.saveAuthData(tokens);
             if (authService.isAuthenticated()) {
-                navigate('/dashboard/diplomas');
+                const role = tokens.user?.role || '';
+                if (role === 'ADMIN' || role === 'SUPER_ADMIN') {
+                    navigate('/admin/diplomas');
+                } else {
+                    navigate('/dashboard/diplomas');
+                }
             }
         },
     });
