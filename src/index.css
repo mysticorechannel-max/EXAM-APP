@@ -37,6 +37,20 @@
     border-radius: 0 !important;
   }
 
+  .radio-circle {
+    border-radius: 50% !important;
+  }
+
+  button,
+  a,
+  [role="button"],
+  label[for],
+  select,
+  input[type="submit"],
+  input[type="button"] {
+    cursor: pointer;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
