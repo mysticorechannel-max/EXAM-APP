@@ -16,6 +16,9 @@ import { AdminDiplomaFormPage } from '@/features/admin/routes/AdminDiplomaFormPa
 import { AdminExamsPage } from '@/features/admin/routes/AdminExamsPage';
 import { AdminExamViewPage } from '@/features/admin/routes/AdminExamViewPage';
 import { AdminExamFormPage } from '@/features/admin/routes/AdminExamFormPage';
+import { AdminQuestionViewPage } from '@/features/admin/routes/AdminQuestionViewPage';
+import { AdminQuestionFormPage } from '@/features/admin/routes/AdminQuestionFormPage';
+import { AdminQuestionBulkAddPage } from '@/features/admin/routes/AdminQuestionBulkAddPage';
 import { AdminAuditLogsPage } from '@/features/admin/routes/AdminAuditLogsPage';
 
 const AuthRoutes = lazy(() => import('@/features/auth/routes'));
@@ -131,6 +134,26 @@ export const router = createBrowserRouter([
                             {
                                 path: 'exams/:id/edit',
                                 element: <AdminExamFormPage />,
+                            },
+                            {
+                                path: 'exams/:examId/questions/new',
+                                element: <AdminQuestionFormPage />,
+                            },
+                            {
+                                path: 'exams/:examId/questions/bulk-add',
+                                element: <AdminQuestionBulkAddPage />,
+                            },
+                            {
+                                path: 'exams/questions/bulk-add',
+                                element: <AdminQuestionBulkAddPage />,
+                            },
+                            {
+                                path: 'exams/:examId/questions/:questionId',
+                                element: <AdminQuestionViewPage />,
+                            },
+                            {
+                                path: 'exams/:examId/questions/:questionId/edit',
+                                element: <AdminQuestionFormPage />,
                             },
                             {
                                 path: 'account-settings',

@@ -37,7 +37,8 @@
     border-radius: 0 !important;
   }
 
-  .radio-circle {
+  .radio-circle,
+  .icon-circle {
     border-radius: 50% !important;
   }
 

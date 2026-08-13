@@ -10,7 +10,6 @@ import chevronsUpDown from '../../../lucideAdmin/chevrons-up-down.svg';
 import saveIcon from '../../../lucideAdmin/save.svg';
 import xIcon from '../../../lucideAdmin/x.svg';
 import cloudUploadIcon from '../../../lucideAdmin/cloud-upload.svg';
-import arrowDownWideNarrow from '../../../lucideAdmin/arrow-down-wide-narrow.svg';
 import trash2Icon from '../../../lucideAdmin/trash-2-red.svg';
 import downloadIcon from '../../../lucideAdmin/download.svg';
 
@@ -312,7 +311,7 @@ export function AdminExamFormPage() {
                         <span className="font-[Geist_Mono] text-sm font-semibold text-white">Exam Questions</span>
                         <button
                             type="button"
-                            onClick={() => setShowAddQuestion(!showAddQuestion)}
+                            onClick={() => navigate(`/admin/exams/${id}/questions/new`)}
                             className="font-[Geist_Mono] text-sm text-white hover:underline"
                         >
                             + Add Questions
@@ -392,9 +391,9 @@ export function AdminExamFormPage() {
                                 <div className="flex justify-end">
                                     <button
                                         type="button"
-                                        onClick={() => handleDeleteQuestion(question.id)}
-                                        className="flex h-[30px] w-[30px] items-center justify-center border border-[#E5E7EB] bg-[#E5E7EB] text-gray-400 hover:text-gray-600"
-                                        aria-label="Actions"
+                                        onClick={() => navigate(`/admin/exams/${id}/questions/${question.id}`)}
+                                        className="flex h-[30px] w-[30px] items-center justify-center border border-[#E5E7EB] bg-[#E5E7EB] text-gray-700 hover:text-gray-900"
+                                        aria-label="View question"
                                     >
                                         <MoreHorizontal className="h-4 w-4" />
                                     </button>

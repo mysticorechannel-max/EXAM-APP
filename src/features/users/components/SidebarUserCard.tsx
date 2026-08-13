@@ -5,7 +5,7 @@ import boltIcon from '../../../lucide/bolt.svg';
 import { authService } from '@/features/auth/services/auth.service';
 import { useProfile } from '../hooks/useProfile';
 
-export function SidebarUserCard() {
+export function SidebarUserCard({ variant = 'light' }: { variant?: 'light' | 'dark' }) {
     const { data: user, isLoading } = useProfile();
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -58,25 +58,27 @@ export function SidebarUserCard() {
     const profilePhoto = displayUser.profilePhoto || '';
     const initials = `${firstName[0] ?? ''}${lastName[0] ?? ''}`.toUpperCase();
 
+    const isDark = variant === 'dark';
+
     return (
-        <div ref={menuRef} className="relative flex items-center gap-3 p-3">
+        <div ref={menuRef} className={`relative flex items-center gap-3 p-3 ${isDark ? '' : ''}`}>
             {profilePhoto ? (
                 <img
                     src={profilePhoto}
                     alt={`${firstName} ${lastName}`}
-                    className="h-10 w-10 rounded-lg object-cover"
+                    className="h-10 w-10 object-cover"
                 />
             ) : (
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-sm font-semibold text-blue-600">
+                <div className={`flex h-10 w-10 items-center justify-center text-sm font-semibold ${isDark ? 'bg-gray-600 text-white' : 'bg-blue-100 text-blue-600'}`}>
                     {initials || 'U'}
                 </div>
             )}
 
             <div className="min-w-0 flex-1">
-                <p className="truncate font-[Geist_Mono] text-sm font-bold text-[#155DFC]">
+                <p className={`truncate font-[Geist_Mono] text-sm font-bold ${isDark ? 'text-white' : 'text-[#155DFC]'}`}>
                     {firstName} {lastName}
                 </p>
-                <p className="truncate font-[Geist_Mono] text-xs text-gray-500">
+                <p className={`truncate font-[Geist_Mono] text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                     {email}
                 </p>
             </div>
@@ -84,7 +86,7 @@ export function SidebarUserCard() {
             <button
                 type="button"
                 onClick={() => setMenuOpen((prev) => !prev)}
-                className="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                className={`p-1 ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600'}`}
                 aria-label="User menu"
             >
                 <MoreVertical className="h-4 w-4" />

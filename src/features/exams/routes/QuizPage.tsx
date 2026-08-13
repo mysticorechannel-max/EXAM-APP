@@ -219,13 +219,11 @@ export function QuizPage() {
                                     }`}
                             >
                                 <div
-                                    className={`flex h-5 w-5 flex-shrink-0 items-center justify-center border-2 ${isSelected ? 'border-[#155DFC]' : 'border-gray-300'}`}
-                                    style={{ borderRadius: '50%' }}
+                                    className={`radio-circle flex h-5 w-5 flex-shrink-0 items-center justify-center border-2 ${isSelected ? 'border-[#155DFC]' : 'border-gray-300'}`}
                                 >
                                     {isSelected && (
                                         <div
-                                            className="h-2.5 w-2.5 bg-[#155DFC]"
-                                            style={{ borderRadius: '50%' }}
+                                            className="radio-circle h-2.5 w-2.5 bg-[#155DFC]"
                                         />
                                     )}
                                 </div>
