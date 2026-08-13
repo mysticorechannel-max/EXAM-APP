@@ -1,14 +1,22 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-import { RootLayout, DashboardLayout } from '@/shared/layouts';
+import { RootLayout, DashboardLayout, AdminLayout } from '@/shared/layouts';
 import { Spinner } from '@/shared/components';
 import { AuthGuard } from '@/features/auth/components/AuthGuard';
+import { AdminGuard } from '@/features/admin/components/AdminGuard';
 import { AccountSettingsPage } from '@/features/users/routes/AccountSettingsPage';
 import { DiplomasPage } from '@/features/diplomas/routes/DiplomasPage';
 import { DiplomaDetailsPage } from '@/features/diplomas/routes/DiplomaDetailsPage';
 import { ExamsPage } from '@/features/exams/routes/ExamsPage';
 import { QuizPage } from '@/features/exams/routes/QuizPage';
 import { ResultsPage } from '@/features/exams/routes/ResultsPage';
+import { AdminDiplomasPage } from '@/features/admin/routes/AdminDiplomasPage';
+import { AdminDiplomaViewPage } from '@/features/admin/routes/AdminDiplomaViewPage';
+import { AdminDiplomaFormPage } from '@/features/admin/routes/AdminDiplomaFormPage';
+import { AdminExamsPage } from '@/features/admin/routes/AdminExamsPage';
+import { AdminExamViewPage } from '@/features/admin/routes/AdminExamViewPage';
+import { AdminExamFormPage } from '@/features/admin/routes/AdminExamFormPage';
+import { AdminAuditLogsPage } from '@/features/admin/routes/AdminAuditLogsPage';
 
 const AuthRoutes = lazy(() => import('@/features/auth/routes'));
 
@@ -51,9 +59,7 @@ export const router = createBrowserRouter([
                         children: [
                             {
                                 index: true,
-                                element: (
-                                    <Navigate to="/dashboard/diplomas" replace />
-                                ),
+                                element: <Navigate to="/dashboard/diplomas" replace />,
                             },
                             {
                                 path: 'diplomas',
@@ -78,6 +84,61 @@ export const router = createBrowserRouter([
                             {
                                 path: 'account',
                                 element: <AccountSettingsPage />,
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                path: 'admin',
+                element: <AdminGuard />,
+                children: [
+                    {
+                        element: <AdminLayout />,
+                        children: [
+                            {
+                                index: true,
+                                element: <Navigate to="/admin/diplomas" replace />,
+                            },
+                            {
+                                path: 'diplomas',
+                                element: <AdminDiplomasPage />,
+                            },
+                            {
+                                path: 'diplomas/new',
+                                element: <AdminDiplomaFormPage />,
+                            },
+                            {
+                                path: 'diplomas/:id',
+                                element: <AdminDiplomaViewPage />,
+                            },
+                            {
+                                path: 'diplomas/:id/edit',
+                                element: <AdminDiplomaFormPage />,
+                            },
+                            {
+                                path: 'exams',
+                                element: <AdminExamsPage />,
+                            },
+                            {
+                                path: 'exams/new',
+                                element: <AdminExamFormPage />,
+                            },
+                            {
+                                path: 'exams/:id',
+                                element: <AdminExamViewPage />,
+                            },
+                            {
+                                path: 'exams/:id/edit',
+                                element: <AdminExamFormPage />,
+                            },
+                            {
+                                path: 'account-settings',
+                                element: <AccountSettingsPage />,
+                            },
+                            {
+                                path: 'audit-logs',
+                                element: <AdminAuditLogsPage />,
                             },
                         ],
                     },

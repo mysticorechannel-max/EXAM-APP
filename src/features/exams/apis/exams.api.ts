@@ -8,6 +8,25 @@ export interface ExamsParams {
     limit?: number;
     diplomaId?: string;
     search?: string;
+    sortBy?: 'title' | 'questionsCount' | 'createdAt';
+    sortOrder?: 'asc' | 'desc';
+    immutable?: boolean;
+}
+
+export interface CreateExamBody {
+    title: string;
+    description?: string;
+    image?: string;
+    duration: number;
+    diplomaId: string;
+}
+
+export interface UpdateExamBody {
+    title?: string;
+    description?: string;
+    image?: string;
+    duration?: number;
+    diplomaId?: string;
 }
 
 export const examsApi = {
@@ -16,6 +35,14 @@ export const examsApi = {
     },
     getById: (id: string) =>
         apiClient.get<ExamDetailsResponse>(`/exams/${id}`),
+    create: (body: CreateExamBody) =>
+        apiClient.post('/exams', body),
+    update: (id: string, body: UpdateExamBody) =>
+        apiClient.patch(`/exams/${id}`, body),
+    delete: (id: string) =>
+        apiClient.delete(`/exams/${id}`),
+    toggleImmutable: (id: string, immutable: boolean) =>
+        apiClient.patch(`/admin/exams/${id}/immutable`, { immutable }),
     submit: (data: SubmitExamRequest) =>
         apiClient.post<SubmitExamResponse>('/submissions', data),
 };
