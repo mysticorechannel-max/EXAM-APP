@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuestions } from '@/features/questions/hooks/useQuestions';
 import { useExamDetails } from '@/features/exams/hooks/useExamDetails';
-import { useDeleteQuestion } from '@/features/questions/hooks/useQuestionMutations';
+import { useDeleteQuestion, useToggleQuestionImmutable } from '@/features/questions/hooks/useQuestionMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
+import { isSuperAdmin } from '@/shared/utils';
 import banIcon from '../../../lucideAdmin/ban.svg';
 import penLineIcon from '../../../lucideAdmin/pen-line.svg';
 import trash2Icon from '../../../lucideAdmin/trash-2.svg';
@@ -14,6 +15,7 @@ export function AdminQuestionViewPage() {
     const { data: questions = [], isLoading } = useQuestions(examId ?? '');
     const { data: exam } = useExamDetails(examId ?? '');
     const deleteMutation = useDeleteQuestion();
+    const immutableMutation = useToggleQuestionImmutable();
 
     const [deleteModal, setDeleteModal] = useState(false);
 
@@ -72,13 +74,17 @@ export function AdminQuestionViewPage() {
                     )}
                 </div>
                 <div className="flex items-center gap-2">
-                    <button
-                        type="button"
-                        className="flex h-[36px] cursor-pointer items-center gap-2 border border-gray-300 bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50"
-                    >
-                        <img src={banIcon} alt="" className="h-4 w-4" />
-                        Immutable
-                    </button>
+                    {isSuperAdmin() && (
+                        <button
+                            type="button"
+                            onClick={() => immutableMutation.mutate({ id: question.id, immutable: true })}
+                            disabled={immutableMutation.isPending}
+                            className="flex h-[36px] cursor-pointer items-center gap-2 border border-gray-300 bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                        >
+                            <img src={banIcon} alt="" className="h-4 w-4" />
+                            Immutable
+                        </button>
+                    )}
                     <button
                         type="button"
                         onClick={() => navigate(`/admin/exams/${examId}/questions/${questionId}/edit`)}

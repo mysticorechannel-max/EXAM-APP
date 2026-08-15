@@ -26,8 +26,8 @@ export function AdminDiplomaFormPage() {
         <DiplomaForm
             diploma={isEdit ? existingDiploma : undefined}
             isEdit={isEdit}
-            onCancel={() => navigate('/admin/diplomas')}
-            onSuccess={() => navigate('/admin/diplomas')}
+            onCancel={() => navigate(isEdit && id ? `/admin/diplomas/${id}` : '/admin/diplomas')}
+            onSuccess={() => navigate(isEdit && id ? `/admin/diplomas/${id}` : '/admin/diplomas')}
         />
     );
 }

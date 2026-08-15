@@ -34,3 +34,14 @@ export function useDeleteQuestion() {
         },
     });
 }
+
+export function useToggleQuestionImmutable() {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({ id, immutable }: { id: string; immutable: boolean }) =>
+            questionsApi.toggleImmutable(id, immutable),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['questions'] });
+        },
+    });
+}

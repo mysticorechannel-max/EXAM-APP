@@ -98,7 +98,7 @@ export function AdminQuestionFormPage() {
             <div className="flex items-center justify-between px-6 py-3">
                 <button
                     type="button"
-                    onClick={() => navigate(examId ? `/admin/exams/${examId}/questions/bulk-add` : '/admin/exams/questions/bulk-add')}
+                    onClick={() => navigate(examId ? `/admin/exams/${examId}/questions/bulk-add` : '/admin/exams')}
                     className="flex h-[40px] items-center gap-2 border border-[#E5E7EB] bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50"
                 >
                     <img src={copyPlusIcon} alt="" className="h-[18px] w-[18px]" />

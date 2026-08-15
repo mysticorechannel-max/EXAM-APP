@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Search, MoreHorizontal, Plus } from 'lucide-react';
 import { useAdminExams } from '../hooks/useAdminExams';
@@ -34,6 +34,19 @@ export function AdminExamsPage() {
     const deleteMutation = useDeleteExam();
     const { data: diplomasData } = useAdminDiplomas({ page: 1, limit: 100 });
     const diplomas = diplomasData?.data ?? [];
+
+    // Close dropdowns when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target.closest('[data-dropdown]')) {
+                setActionDropdownId(null);
+                setSortDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const params: ExamsParams = {
         page,
@@ -164,7 +177,7 @@ export function AdminExamsPage() {
                 <span className="font-[Geist_Mono] text-xs font-semibold text-white">Title</span>
                 <span className="font-[Geist_Mono] text-xs font-semibold text-white">Diploma</span>
                 <span className="font-[Geist_Mono] text-xs font-semibold text-white">No. of Questions</span>
-                <ExamSortDropdown activeSortBy={sortBy} activeSortOrder={sortOrder} onSort={handleSort} open={sortDropdownOpen} onToggle={() => setSortDropdownOpen(!sortDropdownOpen)} />
+                <ExamSortDropdown activeSortBy={sortBy} activeSortOrder={sortOrder} onSort={handleSort} open={sortDropdownOpen} onToggle={() => { setSortDropdownOpen(!sortDropdownOpen); setActionDropdownId(null); }} />
             </div>
 
             {/* Table body */}
@@ -185,8 +198,8 @@ export function AdminExamsPage() {
                         <span className="truncate px-2 font-[Geist_Mono] text-sm text-gray-800">{exam.title}</span>
                         <span className="truncate px-2 font-[Geist_Mono] text-sm text-gray-600">{exam.diploma?.title || '—'}</span>
                         <span className="px-2 font-[Geist_Mono] text-sm text-gray-600">{exam.questionsCount}</span>
-                        <div className="relative flex items-center justify-center">
-                            <button type="button" onClick={() => setActionDropdownId(actionDropdownId === exam.id ? null : exam.id)} className="flex h-[30px] w-[30px] items-center justify-center bg-[#E5E7EB] text-gray-700 hover:text-gray-900" aria-label="Actions">
+                        <div className="relative flex items-center justify-center" data-dropdown>
+                            <button type="button" onClick={() => { setActionDropdownId(actionDropdownId === exam.id ? null : exam.id); setSortDropdownOpen(false); }} className="flex h-[30px] w-[30px] items-center justify-center bg-[#E5E7EB] text-gray-700 hover:text-gray-900" aria-label="Actions">
                                 <MoreHorizontal className="h-4 w-4" />
                             </button>
                             {actionDropdownId === exam.id && <DiplomaActionDropdown onView={() => { setActionDropdownId(null); navigate(`/admin/exams/${exam.id}`); }} onEdit={() => { setActionDropdownId(null); navigate(`/admin/exams/${exam.id}/edit`); }} onDelete={() => { setActionDropdownId(null); setDeleteModal({ open: true, exam }); }} />}

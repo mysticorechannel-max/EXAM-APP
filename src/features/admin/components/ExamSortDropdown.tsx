@@ -25,7 +25,7 @@ interface ExamSortDropdownProps {
 
 export function ExamSortDropdown({ activeSortBy, activeSortOrder, onSort, open, onToggle }: ExamSortDropdownProps) {
     return (
-        <div className="relative flex justify-end">
+        <div className="relative flex justify-end" data-dropdown>
             <button type="button" onClick={onToggle}>
                 <img src={descriptionIcon} alt="Sort" className="h-[36px] w-[80px]" />
             </button>

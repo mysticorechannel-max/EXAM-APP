@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDiplomaDetails } from '@/features/diplomas/hooks/useDiplomaDetails';
 import { useDeleteDiploma, useToggleDiplomaImmutable } from '../hooks/useAdminDiplomaMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
+import { isSuperAdmin } from '@/shared/utils';
 import { useState } from 'react';
 import banIcon from '../../../lucideAdmin/ban.svg';
 import penLineIcon from '../../../lucideAdmin/pen-line.svg';
@@ -62,15 +63,17 @@ export function AdminDiplomaViewPage() {
                     {diploma.title}
                 </h1>
                 <div className="flex items-center gap-2">
-                    <button
-                        type="button"
-                        onClick={handleToggleImmutable}
-                        disabled={immutableMutation.isPending}
-                        className="flex h-[36px] items-center gap-2 border border-gray-300 bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-                    >
-                        <img src={banIcon} alt="" className="h-4 w-4" />
-                        Immutable
-                    </button>
+                    {isSuperAdmin() && (
+                        <button
+                            type="button"
+                            onClick={handleToggleImmutable}
+                            disabled={immutableMutation.isPending}
+                            className="flex h-[36px] items-center gap-2 border border-gray-300 bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                        >
+                            <img src={banIcon} alt="" className="h-4 w-4" />
+                            Immutable
+                        </button>
+                    )}
                     <button
                         type="button"
                         onClick={() => navigate(`/admin/diplomas/${diploma.id}/edit`)}

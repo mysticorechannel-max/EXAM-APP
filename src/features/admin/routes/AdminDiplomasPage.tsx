@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Search, MoreHorizontal, Plus } from 'lucide-react';
 import { useAdminDiplomas } from '../hooks/useAdminDiplomas';
@@ -29,6 +29,19 @@ export function AdminDiplomasPage() {
     const [deleteModal, setDeleteModal] = useState<{ open: boolean; diploma?: Diploma }>({ open: false });
 
     const deleteMutation = useDeleteDiploma();
+
+    // Close dropdowns when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target.closest('[data-dropdown]')) {
+                setActionDropdownId(null);
+                setSortDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const params: DiplomasParams = {
         page,
@@ -145,7 +158,7 @@ export function AdminDiplomasPage() {
                 <span className="font-[Geist_Mono] text-xs font-semibold text-white">Image</span>
                 <span className="font-[Geist_Mono] text-xs font-semibold text-white">Title</span>
                 <span className="font-[Geist_Mono] text-xs font-semibold text-white">Description</span>
-                <DiplomaSortDropdown activeSortBy={sortBy} activeSortOrder={sortOrder} onSort={handleSort} open={sortDropdownOpen} onToggle={() => setSortDropdownOpen(!sortDropdownOpen)} />
+                <DiplomaSortDropdown activeSortBy={sortBy} activeSortOrder={sortOrder} onSort={handleSort} open={sortDropdownOpen} onToggle={() => { setSortDropdownOpen(!sortDropdownOpen); setActionDropdownId(null); }} />
             </div>
 
             {/* Table body */}
@@ -165,8 +178,8 @@ export function AdminDiplomasPage() {
                         </div>
                         <span className="truncate px-2 font-[Geist_Mono] text-sm font-medium text-gray-800">{diploma.title}</span>
                         <span className="line-clamp-3 px-2 font-[Geist_Mono] text-sm text-gray-600">{diploma.description || '—'}</span>
-                        <div className="relative flex h-[36px] w-[80px] items-center justify-center">
-                            <button type="button" onClick={() => setActionDropdownId(actionDropdownId === diploma.id ? null : diploma.id)} className="flex h-[30px] w-[30px] items-center justify-center bg-[#E5E7EB] text-gray-700 hover:text-gray-900" aria-label="Actions">
+                        <div className="relative flex h-[36px] w-[80px] items-center justify-center" data-dropdown>
+                            <button type="button" onClick={() => { setActionDropdownId(actionDropdownId === diploma.id ? null : diploma.id); setSortDropdownOpen(false); }} className="flex h-[30px] w-[30px] items-center justify-center bg-[#E5E7EB] text-gray-700 hover:text-gray-900" aria-label="Actions">
                                 <MoreHorizontal className="h-4 w-4" />
                             </button>
                             {actionDropdownId === diploma.id && <DiplomaActionDropdown onView={() => { setActionDropdownId(null); navigate(`/admin/diplomas/${diploma.id}`); }} onEdit={() => { setActionDropdownId(null); navigate(`/admin/diplomas/${diploma.id}/edit`); }} onDelete={() => { setActionDropdownId(null); setDeleteModal({ open: true, diploma }); }} />}

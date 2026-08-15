@@ -21,4 +21,6 @@ export const questionsApi = {
         apiClient.put(`/questions/${id}`, body),
     delete: (id: string) =>
         apiClient.delete(`/questions/${id}`),
+    toggleImmutable: (id: string, immutable: boolean) =>
+        apiClient.patch(`/admin/questions/${id}/immutable`, { immutable }),
 };
