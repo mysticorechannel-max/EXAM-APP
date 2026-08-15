@@ -67,9 +67,9 @@ apiClient.interceptors.response.use(
     (error: AxiosError<BackendErrorPayload>) => {
         const data = error.response?.data;
 
-        // Auto-logout on 401 only when on a protected dashboard route
+        // Auto-logout on 401 when on any protected route
         if (error.response?.status === 401) {
-            if (window.location.pathname.startsWith('/dashboard')) {
+            if (window.location.pathname.startsWith('/dashboard') || window.location.pathname.startsWith('/admin')) {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
                 localStorage.removeItem('user');
