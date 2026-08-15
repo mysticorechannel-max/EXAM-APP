@@ -20,7 +20,6 @@ export function AdminExamViewPage() {
     const immutableMutation = useToggleExamImmutable();
 
     const [deleteModal, setDeleteModal] = useState(false);
-    const [questionActionId, setQuestionActionId] = useState<string | null>(null);
 
     if (isLoading) {
         return (
