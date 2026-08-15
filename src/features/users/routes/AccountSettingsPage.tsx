@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { LogOut, ChevronLeft, User } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { authService } from '@/features/auth/services/auth.service';
@@ -13,6 +13,9 @@ type Tab = 'profile' | 'change-password';
 export function AccountSettingsPage() {
     const [activeTab, setActiveTab] = useState<Tab>('profile');
     const navigate = useNavigate();
+    const location = useLocation();
+    const isAdminContext = location.pathname.startsWith('/admin');
+    const backPath = isAdminContext ? '/admin/diplomas' : '/dashboard/diplomas';
 
     const handleLogout = () => {
         authService.clearAuthData();
@@ -27,7 +30,7 @@ export function AccountSettingsPage() {
             {/* Blue banner header with separate back button */}
             <div className="flex items-stretch gap-3">
                 <Link
-                    to="/dashboard/diplomas"
+                    to={backPath}
                     className="flex w-[45px] items-center justify-center border border-[#155DFC] text-[#155DFC] hover:bg-blue-50"
                 >
                     <ChevronLeft className="h-5 w-5" />

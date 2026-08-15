@@ -1,13 +1,12 @@
 import { X, TriangleAlert } from 'lucide-react';
 
-interface ConfirmDeleteModalProps {
-    title: string;
+interface ClearAllLogsModalProps {
     isLoading: boolean;
     onConfirm: () => void;
     onClose: () => void;
 }
 
-export function ConfirmDeleteModal({ title, isLoading, onConfirm, onClose }: ConfirmDeleteModalProps) {
+export function ClearAllLogsModal({ isLoading, onConfirm, onClose }: ClearAllLogsModalProps) {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
             <div className="w-full max-w-[460px] bg-white">
@@ -26,9 +25,13 @@ export function ConfirmDeleteModal({ title, isLoading, onConfirm, onClose }: Con
                 {/* Warning icon with pink circular background */}
                 <div className="flex justify-center pb-6">
                     <div className="relative flex h-[110px] w-[110px] items-center justify-center">
+                        {/* Outer circle - lightest */}
                         <div className="icon-circle absolute h-[110px] w-[110px] bg-[#FEF2F2]" />
+                        {/* Middle circle */}
                         <div className="icon-circle absolute h-[80px] w-[80px] bg-[#FEE2E2]" />
+                        {/* Inner circle - darkest */}
                         <div className="icon-circle absolute h-[56px] w-[56px] bg-[#FECACA]" />
+                        {/* Icon - 50x50 */}
                         <TriangleAlert className="relative z-10 h-[50px] w-[50px] text-[#DC2626]" strokeWidth={2} />
                     </div>
                 </div>
@@ -36,7 +39,7 @@ export function ConfirmDeleteModal({ title, isLoading, onConfirm, onClose }: Con
                 {/* Text */}
                 <div className="px-8 pb-6 text-center">
                     <p className="font-[Geist_Mono] text-[16px] font-semibold text-[#DC2626]">
-                        Are you sure you want to delete &ldquo;{title}&rdquo;?
+                        Are you sure you want to clear all logs?
                     </p>
                     <p className="mt-2 font-[Geist_Mono] text-[14px] font-normal text-gray-500">
                         This action is permanent and cannot be undone.
@@ -59,7 +62,7 @@ export function ConfirmDeleteModal({ title, isLoading, onConfirm, onClose }: Con
                         disabled={isLoading}
                         className="flex h-[40px] flex-1 items-center justify-center bg-[#DC2626] font-[Geist_Mono] text-[14px] font-medium text-white hover:bg-red-700 disabled:opacity-60"
                     >
-                        {isLoading ? 'Deleting...' : 'Delete'}
+                        {isLoading ? 'Clearing...' : 'Yes, clear'}
                     </button>
                 </div>
             </div>

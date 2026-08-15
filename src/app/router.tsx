@@ -20,6 +20,7 @@ import { AdminQuestionViewPage } from '@/features/admin/routes/AdminQuestionView
 import { AdminQuestionFormPage } from '@/features/admin/routes/AdminQuestionFormPage';
 import { AdminQuestionBulkAddPage } from '@/features/admin/routes/AdminQuestionBulkAddPage';
 import { AdminAuditLogsPage } from '@/features/admin/routes/AdminAuditLogsPage';
+import { AdminAuditLogViewPage } from '@/features/admin/routes/AdminAuditLogViewPage';
 
 const AuthRoutes = lazy(() => import('@/features/auth/routes'));
 
@@ -144,10 +145,6 @@ export const router = createBrowserRouter([
                                 element: <AdminQuestionBulkAddPage />,
                             },
                             {
-                                path: 'exams/questions/bulk-add',
-                                element: <AdminQuestionBulkAddPage />,
-                            },
-                            {
                                 path: 'exams/:examId/questions/:questionId',
                                 element: <AdminQuestionViewPage />,
                             },
@@ -162,6 +159,10 @@ export const router = createBrowserRouter([
                             {
                                 path: 'audit-logs',
                                 element: <AdminAuditLogsPage />,
+                            },
+                            {
+                                path: 'audit-logs/:id',
+                                element: <AdminAuditLogViewPage />,
                             },
                         ],
                     },
