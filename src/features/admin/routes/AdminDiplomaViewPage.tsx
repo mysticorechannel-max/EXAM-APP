@@ -2,7 +2,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDiplomaDetails } from '@/features/diplomas/hooks/useDiplomaDetails';
 import { useDeleteDiploma, useToggleDiplomaImmutable } from '../hooks/useAdminDiplomaMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
-import { isSuperAdmin } from '@/shared/utils';
 import { useState } from 'react';
 import banIcon from '../../../lucideAdmin/ban.svg';
 import penLineIcon from '../../../lucideAdmin/pen-line.svg';
@@ -63,17 +62,15 @@ export function AdminDiplomaViewPage() {
                     {diploma.title}
                 </h1>
                 <div className="flex items-center gap-2">
-                    {isSuperAdmin() && (
-                        <button
-                            type="button"
-                            onClick={handleToggleImmutable}
-                            disabled={immutableMutation.isPending}
-                            className="flex h-[36px] items-center gap-2 border border-gray-300 bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-                        >
-                            <img src={banIcon} alt="" className="h-4 w-4" />
-                            Immutable
-                        </button>
-                    )}
+                    <button
+                        type="button"
+                        onClick={handleToggleImmutable}
+                        disabled={immutableMutation.isPending}
+                        className="flex h-[40px] items-center gap-[10px] border border-[#E5E7EB] bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                    >
+                        <img src={banIcon} alt="" className="h-4 w-4" />
+                        Immutable
+                    </button>
                     <button
                         type="button"
                         onClick={() => navigate(`/admin/diplomas/${diploma.id}/edit`)}
@@ -95,30 +92,35 @@ export function AdminDiplomaViewPage() {
 
             {/* Body */}
             <div className="border-t border-gray-200 bg-white px-6 py-6">
-                {/* Image */}
-                <div className="mb-6">
-                    <p className="mb-2 font-[Geist_Mono] text-xs text-gray-400">Image</p>
-                    {diploma.image ? (
-                        <img src={diploma.image} alt={diploma.title} className="max-h-[300px] object-contain" />
-                    ) : (
-                        <div className="flex h-[200px] w-[200px] items-center justify-center bg-gray-100 font-[Geist_Mono] text-sm text-gray-400">
-                            No image
-                        </div>
-                    )}
-                </div>
+                <div className="border border-gray-200 rounded px-6 py-6">
+                    {/* Image */}
+                    <div className="mb-6">
+                        <p className="mb-2 font-[Geist_Mono] text-xs text-amber-500">Image</p>
+                        {diploma.image ? (
+                            <img src={diploma.image} alt={diploma.title} className="max-h-[300px] object-contain" />
+                        ) : (
+                            <div className="flex h-[200px] w-[200px] items-center justify-center bg-gray-100 font-[Geist_Mono] text-sm text-gray-400">
+                                No image
+                            </div>
+                        )}
+                    </div>
 
-                {/* Title */}
-                <div className="mb-6">
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Title</p>
-                    <p className="font-[Geist_Mono] text-sm text-gray-800">{diploma.title}</p>
-                </div>
+                    {/* Title */}
+                    <div className="mb-6">
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Title</p>
+                        <p className="font-[Geist_Mono] text-sm text-gray-800">{diploma.title}</p>
+                    </div>
 
-                {/* Description */}
-                <div>
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Description</p>
-                    <p className="font-[Geist_Mono] text-sm text-gray-700 leading-relaxed">
-                        {diploma.description || '—'}
-                    </p>
+                    {/* Description */}
+                    <div>
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Description</p>
+                        <p className="font-[Geist_Mono] text-sm text-gray-700 leading-relaxed">
+                            {diploma.description || '—'}
+                        </p>
+                    </div>
+
+                    {/* Bottom divider */}
+                    <hr className="mt-6 border-gray-200" />
                 </div>
             </div>
 

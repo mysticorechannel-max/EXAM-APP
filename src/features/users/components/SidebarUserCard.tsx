@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { MoreVertical, User, LogOut } from 'lucide-react';
 import boltIcon from '../../../lucide/bolt.svg';
 import { authService } from '@/features/auth/services/auth.service';
@@ -10,6 +10,8 @@ export function SidebarUserCard({ variant = 'light' }: { variant?: 'light' | 'da
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
+    const location = useLocation();
+    const isAdminContext = location.pathname.startsWith('/admin');
 
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
@@ -99,7 +101,7 @@ export function SidebarUserCard({ variant = 'light' }: { variant?: 'light' | 'da
                         type="button"
                         onClick={() => {
                             setMenuOpen(false);
-                            navigate('/dashboard/account');
+                            navigate(isAdminContext ? '/admin/account-settings' : '/dashboard/account');
                         }}
                         className="flex w-full items-center gap-2 border-b border-gray-100 px-4 py-2.5 text-left font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50"
                     >
@@ -110,7 +112,7 @@ export function SidebarUserCard({ variant = 'light' }: { variant?: 'light' | 'da
                         type="button"
                         onClick={() => {
                             setMenuOpen(false);
-                            navigate('/dashboard/diplomas');
+                            navigate(isAdminContext ? '/admin/diplomas' : '/dashboard/diplomas');
                         }}
                         className="flex w-full items-center gap-2 border-b border-gray-100 px-4 py-2.5 text-left font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50"
                     >

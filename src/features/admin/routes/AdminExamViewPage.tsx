@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { MoreHorizontal } from 'lucide-react';
 import { useExamDetails } from '@/features/exams/hooks/useExamDetails';
 import { useQuestions } from '@/features/questions/hooks/useQuestions';
 import { useDeleteExam, useToggleExamImmutable } from '../hooks/useAdminExamMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
-import { isSuperAdmin } from '@/shared/utils';
 import banIcon from '../../../lucideAdmin/ban.svg';
 import penLineIcon from '../../../lucideAdmin/pen-line.svg';
 import trash2Icon from '../../../lucideAdmin/trash-2.svg';
@@ -20,6 +19,21 @@ export function AdminExamViewPage() {
     const immutableMutation = useToggleExamImmutable();
 
     const [deleteModal, setDeleteModal] = useState(false);
+    const [sortOpen, setSortOpen] = useState(false);
+    const [sortBy, setSortBy] = useState<'text' | 'createdAt'>('text');
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+    const sortedQuestions = useMemo(() => {
+        return [...questions].sort((a, b) => {
+            if (sortBy === 'text') {
+                const cmp = a.text.localeCompare(b.text);
+                return sortOrder === 'asc' ? cmp : -cmp;
+            }
+            const dateA = new Date(a.createdAt || '').getTime();
+            const dateB = new Date(b.createdAt || '').getTime();
+            return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+        });
+    }, [questions, sortBy, sortOrder]);
 
     if (isLoading) {
         return (
@@ -74,17 +88,15 @@ export function AdminExamViewPage() {
                     )}
                 </div>
                 <div className="flex items-center gap-2">
-                    {isSuperAdmin() && (
-                        <button
-                            type="button"
-                            onClick={handleToggleImmutable}
-                            disabled={immutableMutation.isPending}
-                            className="flex h-[36px] items-center gap-2 border border-gray-300 bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-                        >
-                            <img src={banIcon} alt="" className="h-4 w-4" />
-                            Immutable
-                        </button>
-                    )}
+                    <button
+                        type="button"
+                        onClick={handleToggleImmutable}
+                        disabled={immutableMutation.isPending}
+                        className="flex h-[40px] items-center gap-[10px] border border-[#E5E7EB] bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                    >
+                        <img src={banIcon} alt="" className="h-4 w-4" />
+                        Immutable
+                    </button>
                     <button
                         type="button"
                         onClick={() => navigate(`/admin/exams/${exam.id}/edit`)}
@@ -106,54 +118,59 @@ export function AdminExamViewPage() {
 
             {/* Body */}
             <div className="border-t border-gray-200 bg-white px-6 py-6">
-                {/* Image */}
-                <div className="mb-6">
-                    <p className="mb-2 font-[Geist_Mono] text-xs text-gray-400">Image</p>
-                    {exam.image ? (
-                        <img src={exam.image} alt={exam.title} className="max-h-[300px] object-contain" />
-                    ) : (
-                        <div className="flex h-[200px] w-[200px] items-center justify-center bg-gray-100 font-[Geist_Mono] text-sm text-gray-400">
-                            No image
-                        </div>
-                    )}
-                </div>
+                <div className="border border-gray-200 rounded px-6 py-6">
+                    {/* Image */}
+                    <div className="mb-6">
+                        <p className="mb-2 font-[Geist_Mono] text-xs text-amber-500">Image</p>
+                        {exam.image ? (
+                            <img src={exam.image} alt={exam.title} className="max-h-[300px] object-contain" />
+                        ) : (
+                            <div className="flex h-[200px] w-[200px] items-center justify-center bg-gray-100 font-[Geist_Mono] text-sm text-gray-400">
+                                No image
+                            </div>
+                        )}
+                    </div>
 
-                {/* Title */}
-                <div className="mb-6">
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Title</p>
-                    <p className="font-[Geist_Mono] text-sm text-gray-800">{exam.title}</p>
-                </div>
+                    {/* Title */}
+                    <div className="mb-6">
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Title</p>
+                        <p className="font-[Geist_Mono] text-sm text-gray-800">{exam.title}</p>
+                    </div>
 
-                {/* Description */}
-                <div className="mb-6">
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Description</p>
-                    <p className="font-[Geist_Mono] text-sm leading-relaxed text-gray-700">
-                        {exam.description || '—'}
-                    </p>
-                </div>
+                    {/* Description */}
+                    <div className="mb-6">
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Description</p>
+                        <p className="font-[Geist_Mono] text-sm leading-relaxed text-gray-700">
+                            {exam.description || '—'}
+                        </p>
+                    </div>
 
-                {/* Diploma */}
-                <div className="mb-6">
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Diploma</p>
-                    {exam.diploma ? (
-                        <Link to={`/admin/diplomas/${exam.diplomaId}`} className="font-[Geist_Mono] text-sm text-gray-800 hover:text-[#155DFC]">
-                            {exam.diploma.title} ↗
-                        </Link>
-                    ) : (
-                        <p className="font-[Geist_Mono] text-sm text-gray-800">—</p>
-                    )}
-                </div>
+                    {/* Diploma */}
+                    <div className="mb-6">
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Diploma</p>
+                        {exam.diploma ? (
+                            <Link to={`/admin/diplomas/${exam.diplomaId}`} className="font-[Geist_Mono] text-sm text-gray-800 hover:text-[#155DFC]">
+                                {exam.diploma.title} ↗
+                            </Link>
+                        ) : (
+                            <p className="font-[Geist_Mono] text-sm text-gray-800">—</p>
+                        )}
+                    </div>
 
-                {/* Duration */}
-                <div className="mb-6">
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Duration</p>
-                    <p className="font-[Geist_Mono] text-sm font-semibold text-gray-800">{exam.duration} Minutes</p>
-                </div>
+                    {/* Duration */}
+                    <div className="mb-6">
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Duration</p>
+                        <p className="font-[Geist_Mono] text-sm font-semibold text-gray-800">{exam.duration} Minutes</p>
+                    </div>
 
-                {/* No. of Questions */}
-                <div className="mb-6">
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">No. of Questions</p>
-                    <p className="font-[Geist_Mono] text-sm font-semibold text-gray-800">{exam.questionsCount}</p>
+                    {/* No. of Questions */}
+                    <div className="mb-6">
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">No. of Questions</p>
+                        <p className="font-[Geist_Mono] text-sm font-semibold text-gray-800">{exam.questionsCount}</p>
+                    </div>
+
+                    {/* Bottom divider */}
+                    <hr className="border-gray-200" />
                 </div>
             </div>
 
@@ -174,20 +191,58 @@ export function AdminExamViewPage() {
                 {/* Questions table header */}
                 <div className="grid grid-cols-[1fr_80px] items-center border-b border-gray-200 bg-gray-50 px-[10px] py-2">
                     <span className="font-[Geist_Mono] text-xs font-semibold text-gray-700">Title</span>
-                    <div className="flex items-center justify-end gap-1">
-                        <span className="font-[Geist_Mono] text-[14px] font-medium text-gray-700">Sort</span>
-                        <img src={arrowDownWideNarrow} alt="" className="h-[18px] w-[18px]" />
+                    <div className="relative flex items-center justify-end gap-1">
+                        <button
+                            type="button"
+                            onClick={() => setSortOpen(!sortOpen)}
+                            className="flex items-center gap-1"
+                        >
+                            <span className="font-[Geist_Mono] text-[14px] font-medium text-gray-700">Sort</span>
+                            <img src={arrowDownWideNarrow} alt="" className="h-[18px] w-[18px]" />
+                        </button>
+                        {sortOpen && (
+                            <div className="absolute top-full right-0 z-20 mt-1 w-[220px] border border-gray-200 bg-white shadow-md">
+                                <button
+                                    type="button"
+                                    onClick={() => { setSortBy('text'); setSortOrder('asc'); setSortOpen(false); }}
+                                    className={`flex w-full items-center px-4 py-2.5 text-left font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 ${sortBy === 'text' && sortOrder === 'asc' ? 'bg-blue-50 font-medium' : ''}`}
+                                >
+                                    Title (A-Z)
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => { setSortBy('text'); setSortOrder('desc'); setSortOpen(false); }}
+                                    className={`flex w-full items-center px-4 py-2.5 text-left font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 ${sortBy === 'text' && sortOrder === 'desc' ? 'bg-blue-50 font-medium' : ''}`}
+                                >
+                                    Title (Z-A)
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => { setSortBy('createdAt'); setSortOrder('desc'); setSortOpen(false); }}
+                                    className={`flex w-full items-center px-4 py-2.5 text-left font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 ${sortBy === 'createdAt' && sortOrder === 'desc' ? 'bg-blue-50 font-medium' : ''}`}
+                                >
+                                    Newest first
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => { setSortBy('createdAt'); setSortOrder('asc'); setSortOpen(false); }}
+                                    className={`flex w-full items-center px-4 py-2.5 text-left font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 ${sortBy === 'createdAt' && sortOrder === 'asc' ? 'bg-blue-50 font-medium' : ''}`}
+                                >
+                                    Oldest first
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
 
                 {/* Questions list */}
                 <div className="bg-white">
-                    {questions.length === 0 && (
+                    {sortedQuestions.length === 0 && (
                         <div className="flex items-center justify-center py-10">
                             <p className="font-[Geist_Mono] text-sm text-gray-500">No questions yet.</p>
                         </div>
                     )}
-                    {questions.map((question) => (
+                    {sortedQuestions.map((question) => (
                         <div key={question.id} className="grid grid-cols-[1fr_80px] items-center border-b border-gray-200 px-[10px] py-3">
                             <span className="font-[Geist_Mono] text-[14px] font-medium text-gray-800">{question.text}</span>
                             <div className="flex justify-end">

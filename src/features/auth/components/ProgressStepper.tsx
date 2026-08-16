@@ -16,20 +16,13 @@ export function ProgressStepper({ currentStep, totalSteps = 4 }: ProgressStepper
                 return (
                     <div key={step} className="flex flex-1 items-center">
                         {/* Diamond indicator */}
-                        <div
-                            className={cn(
-                                'relative flex items-center justify-center',
-                                isActive && 'rounded-full bg-blue-100 p-2'
-                            )}
-                        >
+                        <div className="relative flex items-center justify-center">
                             <div
                                 className={cn(
                                     'rotate-45',
-                                    isActive
+                                    isActive || isCompleted
                                         ? 'h-[10px] w-[10px] bg-[#155DFC]'
-                                        : isCompleted
-                                            ? 'h-[10px] w-[10px] bg-[#155DFC]'
-                                            : 'h-[8px] w-[8px] bg-gray-300'
+                                        : 'h-[8px] w-[8px] border-[1.5px] border-[#155DFC] bg-transparent'
                                 )}
                             />
                         </div>
@@ -38,8 +31,10 @@ export function ProgressStepper({ currentStep, totalSteps = 4 }: ProgressStepper
                         {step < totalSteps && (
                             <div
                                 className={cn(
-                                    'h-[1px] flex-1',
-                                    step < currentStep ? 'bg-[#155DFC]' : 'bg-gray-200'
+                                    'flex-1',
+                                    step < currentStep
+                                        ? 'h-[2px] bg-[#155DFC]'
+                                        : 'border-t-[2px] border-dashed border-[#155DFC] opacity-50'
                                 )}
                             />
                         )}
