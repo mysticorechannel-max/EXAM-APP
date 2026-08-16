@@ -137,9 +137,13 @@ export function ChangeEmailDialog({ open, onClose }: ChangeEmailDialogProps) {
 
                 {/* Progress indicator */}
                 <div className="mt-4 mb-6 flex items-center">
-                    <div className={`h-3 w-3 rotate-45 border-2 ${step === 'email' ? 'border-[#155DFC] bg-[#155DFC]' : 'border-[#155DFC] bg-[#155DFC]'}`} />
-                    <div className={`h-0 flex-1 border-t-2 border-dashed ${step === 'otp' ? 'border-[#155DFC]' : 'border-[#155DFC]'}`} />
-                    <div className={`h-3 w-3 rotate-45 border-2 ${step === 'otp' ? 'border-[#155DFC] bg-[#155DFC]' : 'border-[#155DFC] bg-white'}`} />
+                    <div className="h-[10px] w-[10px] rotate-45 bg-[#155DFC]" />
+                    <div className={`h-0 flex-1 border-t-2 ${step === 'otp' ? 'border-[#155DFC]' : 'border-dashed border-[#155DFC]'}`} />
+                    {step === 'otp' ? (
+                        <div className="h-[10px] w-[10px] rotate-45 bg-[#155DFC]" />
+                    ) : (
+                        <div className="h-[8px] w-[8px] rotate-45 border-[1.5px] border-[#155DFC] bg-transparent" />
+                    )}
                 </div>
 
                 <h2 className="mb-3 text-[22px] font-bold text-gray-900">Change Email</h2>

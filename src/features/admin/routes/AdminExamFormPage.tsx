@@ -3,13 +3,12 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { MoreHorizontal, Plus } from 'lucide-react';
 import { useExamDetails } from '@/features/exams/hooks/useExamDetails';
 import { useQuestions } from '@/features/questions/hooks/useQuestions';
-import { useCreateQuestion, useDeleteQuestion } from '@/features/questions/hooks/useQuestionMutations';
+import { useCreateQuestion } from '@/features/questions/hooks/useQuestionMutations';
 import { useAdminDiplomas } from '../hooks/useAdminDiplomas';
 import { useCreateExam, useUpdateExam } from '../hooks/useAdminExamMutations';
 import chevronsUpDown from '../../../lucideAdmin/chevrons-up-down.svg';
 import saveIcon from '../../../lucideAdmin/save.svg';
 import xIcon from '../../../lucideAdmin/x.svg';
-import cloudUploadIcon from '../../../lucideAdmin/cloud-upload.svg';
 import trash2Icon from '../../../lucideAdmin/trash-2-red.svg';
 import downloadIcon from '../../../lucideAdmin/download.svg';
 
@@ -26,7 +25,6 @@ export function AdminExamFormPage() {
     const createMutation = useCreateExam();
     const updateMutation = useUpdateExam();
     const createQuestionMutation = useCreateQuestion();
-    const deleteQuestionMutation = useDeleteQuestion();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -130,10 +128,6 @@ export function AdminExamFormPage() {
                 },
             }
         );
-    };
-
-    const handleDeleteQuestion = (questionId: string) => {
-        deleteQuestionMutation.mutate(questionId);
     };
 
     if (isEdit && examLoading) {
