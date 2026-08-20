@@ -1,7 +1,7 @@
-import folderCodeIcon from '../../../lucide/folder-code.svg';
-import brainIcon from '../../../lucide/brain.svg';
-import bookCheckIcon from '../../../lucide/book-check.svg';
-import messageDotsIcon from '../../../lucide/message-dots.svg';
+import folderCodeIcon from '@/assets/icons/common/folder-code.svg';
+import brainIcon from '@/assets/icons/common/brain.svg';
+import bookCheckIcon from '@/assets/icons/common/book-check.svg';
+import messageDotsIcon from '@/assets/icons/common/message-dots.svg';
 
 export function AuthBranding() {
     return (

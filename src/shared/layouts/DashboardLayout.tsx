@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { GraduationCap, User, Menu, X } from 'lucide-react';
 import { SidebarUserCard } from '@/features/users/components/SidebarUserCard';
-import folderCodeIcon from '../../lucide/folder-code.svg';
-import elevateLogo from '../../lucide/Final Logo 1.svg';
+import folderCodeIcon from '@/assets/icons/common/folder-code.svg';
+import elevateLogo from '@/assets/icons/common/Final Logo 1.svg';
 
 function BrandLogo() {
     return (

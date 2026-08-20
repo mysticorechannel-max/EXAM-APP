@@ -1,8 +1,8 @@
 import { useState, type FormEvent } from 'react';
 import { useCreateDiploma, useUpdateDiploma } from '../hooks/useAdminDiplomaMutations';
 import type { Diploma } from '@/features/diplomas/types/diploma.types';
-import xIcon from '../../../lucideAdmin/x.svg';
-import saveIcon from '../../../lucideAdmin/save.svg';
+import xIcon from '@/assets/icons/admin/x.svg';
+import saveIcon from '@/assets/icons/admin/save.svg';
 
 interface AdminDiplomaFormModalProps {
     diploma?: Diploma;

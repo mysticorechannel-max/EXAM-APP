@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { MoreVertical, User, LogOut } from 'lucide-react';
-import boltIcon from '../../../lucide/bolt.svg';
+import boltIcon from '@/assets/icons/common/bolt.svg';
 import { authService } from '@/features/auth/services/auth.service';
 import { useProfile } from '../hooks/useProfile';
 

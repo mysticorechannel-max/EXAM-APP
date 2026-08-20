@@ -6,11 +6,11 @@ import { useQuestions } from '@/features/questions/hooks/useQuestions';
 import { useCreateQuestion } from '@/features/questions/hooks/useQuestionMutations';
 import { useAdminDiplomas } from '../hooks/useAdminDiplomas';
 import { useCreateExam, useUpdateExam } from '../hooks/useAdminExamMutations';
-import chevronsUpDown from '../../../lucideAdmin/chevrons-up-down.svg';
-import saveIcon from '../../../lucideAdmin/save.svg';
-import xIcon from '../../../lucideAdmin/x.svg';
-import trash2Icon from '../../../lucideAdmin/trash-2-red.svg';
-import downloadIcon from '../../../lucideAdmin/download.svg';
+import chevronsUpDown from '@/assets/icons/admin/chevrons-up-down.svg';
+import saveIcon from '@/assets/icons/admin/save.svg';
+import xIcon from '@/assets/icons/admin/x.svg';
+import trash2Icon from '@/assets/icons/admin/trash-2-red.svg';
+import downloadIcon from '@/assets/icons/admin/download.svg';
 
 export function AdminExamFormPage() {
     const { id } = useParams<{ id: string }>();

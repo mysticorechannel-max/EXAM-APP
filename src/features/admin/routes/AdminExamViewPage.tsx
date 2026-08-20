@@ -5,10 +5,10 @@ import { useExamDetails } from '@/features/exams/hooks/useExamDetails';
 import { useQuestions } from '@/features/questions/hooks/useQuestions';
 import { useDeleteExam, useToggleExamImmutable } from '../hooks/useAdminExamMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
-import banIcon from '../../../lucideAdmin/ban.svg';
-import penLineIcon from '../../../lucideAdmin/pen-line.svg';
-import trash2Icon from '../../../lucideAdmin/trash-2.svg';
-import arrowDownWideNarrow from '../../../lucideAdmin/arrow-down-wide-narrow.svg';
+import banIcon from '@/assets/icons/admin/ban.svg';
+import penLineIcon from '@/assets/icons/admin/pen-line.svg';
+import trash2Icon from '@/assets/icons/admin/trash-2.svg';
+import arrowDownWideNarrow from '@/assets/icons/admin/arrow-down-wide-narrow.svg';
 
 export function AdminExamViewPage() {
     const { id } = useParams<{ id: string }>();

@@ -2,10 +2,10 @@ import { useState, type FormEvent } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useDiplomaDetails } from '@/features/diplomas/hooks/useDiplomaDetails';
 import { useCreateDiploma, useUpdateDiploma } from '../hooks/useAdminDiplomaMutations';
-import xIcon from '../../../lucideAdmin/x.svg';
-import saveIcon from '../../../lucideAdmin/save.svg';
-import fileImageIcon from '../../../lucideAdmin/file-image.svg';
-import cloudUploadIcon from '../../../lucideAdmin/cloud-upload.svg';
+import xIcon from '@/assets/icons/admin/x.svg';
+import saveIcon from '@/assets/icons/admin/save.svg';
+import fileImageIcon from '@/assets/icons/admin/file-image.svg';
+import cloudUploadIcon from '@/assets/icons/admin/cloud-upload.svg';
 
 export function AdminDiplomaFormPage() {
     const { id } = useParams<{ id: string }>();

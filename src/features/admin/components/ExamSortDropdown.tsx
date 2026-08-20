@@ -1,8 +1,8 @@
-import arrowDownAZ from '../../../lucideAdmin/arrow-down-a-z.svg';
-import arrowUpAZ from '../../../lucideAdmin/arrow-up-a-z.svg';
-import calendarArrowDown from '../../../lucideAdmin/calendar-arrow-down.svg';
-import calendarArrowUp from '../../../lucideAdmin/calendar-arrow-up.svg';
-import descriptionIcon from '../../../lucideAdmin/Description.svg';
+import arrowDownAZ from '@/assets/icons/admin/arrow-down-a-z.svg';
+import arrowUpAZ from '@/assets/icons/admin/arrow-up-a-z.svg';
+import calendarArrowDown from '@/assets/icons/admin/calendar-arrow-down.svg';
+import calendarArrowUp from '@/assets/icons/admin/calendar-arrow-up.svg';
+import descriptionIcon from '@/assets/icons/admin/Description.svg';
 
 type SortOption = { sortBy: 'title' | 'questionsCount' | 'createdAt'; sortOrder: 'asc' | 'desc'; label: string; icon: string };
 

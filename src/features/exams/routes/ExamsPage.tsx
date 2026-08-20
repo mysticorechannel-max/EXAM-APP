@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
-import bookCheckIcon from '../../../lucide/book-check.svg';
+import bookCheckIcon from '@/assets/icons/common/book-check.svg';
 import { Spinner } from '@/shared/components';
 import { useDiplomaDetails } from '@/features/diplomas/hooks/useDiplomaDetails';
 import { useExams } from '../hooks/useExams';

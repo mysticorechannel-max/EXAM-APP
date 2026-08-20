@@ -7,10 +7,10 @@ import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
 import { ClearAllLogsModal } from '@/features/audit/components/ClearAllLogsModal';
 import { AuditLogActionDropdown } from '@/features/audit/components/AuditLogActionDropdown';
 import { AuditLogSortDropdown } from '@/features/audit/components/AuditLogSortDropdown';
-import slidersIcon from '../../../lucideAdmin/sliders-horizontal.svg';
-import hideIcon from '../../../lucideAdmin/Hide.svg';
-import chevronsUpDown from '../../../lucideAdmin/chevrons-up-down.svg';
-import shredderIcon from '../../../lucideAdmin/shredder.svg';
+import slidersIcon from '@/assets/icons/admin/sliders-horizontal.svg';
+import hideIcon from '@/assets/icons/admin/Hide.svg';
+import chevronsUpDown from '@/assets/icons/admin/chevrons-up-down.svg';
+import shredderIcon from '@/assets/icons/admin/shredder.svg';
 import type { AuditLog, AuditLogsParams } from '@/features/audit/types/audit.types';
 
 type SortByField = 'action' | 'user' | 'entity' | 'createdAt';

@@ -7,9 +7,9 @@ import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
 import { DiplomaActionDropdown } from '../components/DiplomaActionDropdown';
 import { ExamSortDropdown } from '../components/ExamSortDropdown';
 import { useAdminDiplomas } from '../hooks/useAdminDiplomas';
-import slidersIcon from '../../../lucideAdmin/sliders-horizontal.svg';
-import hideIcon from '../../../lucideAdmin/Hide.svg';
-import chevronsUpDown from '../../../lucideAdmin/chevrons-up-down.svg';
+import slidersIcon from '@/assets/icons/admin/sliders-horizontal.svg';
+import hideIcon from '@/assets/icons/admin/Hide.svg';
+import chevronsUpDown from '@/assets/icons/admin/chevrons-up-down.svg';
 import type { Exam } from '@/features/exams/types/exam.types';
 import type { ExamsParams } from '@/features/exams/apis/exams.api';
 
