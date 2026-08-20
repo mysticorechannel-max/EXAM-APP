@@ -1,6 +1,6 @@
 import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import { ChevronLeft, CircleHelp, RotateCcw } from 'lucide-react';
-import folderSearchIcon from '../../../lucide/folder-search.svg';
+import folderSearchIcon from '@/assets/icons/common/folder-search.svg';
 import { useExamDetails } from '../hooks/useExamDetails';
 import type { Question } from '@/features/questions/types/question.types';
 import type { AnalyticsItem } from '../types/submission.types';

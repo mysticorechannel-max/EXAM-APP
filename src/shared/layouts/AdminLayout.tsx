@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { SidebarUserCard } from '@/features/users/components/SidebarUserCard';
-import folderCodeIcon from '../../lucideAdmin/folder-code.svg';
-import elevateLogo from '../../lucide/Final Logo 1.svg';
-import graduationCapIcon from '../../lucideAdmin/graduation-cap.svg';
-import bookOpenCheckIcon from '../../lucideAdmin/book-open-check.svg';
-import userRoundIcon from '../../lucideAdmin/user-round.svg';
-import logsIcon from '../../lucideAdmin/logs.svg';
+import folderCodeIcon from '@/assets/icons/admin/folder-code.svg';
+import elevateLogo from '@/assets/icons/common/Final Logo 1.svg';
+import graduationCapIcon from '@/assets/icons/admin/graduation-cap.svg';
+import bookOpenCheckIcon from '@/assets/icons/admin/book-open-check.svg';
+import userRoundIcon from '@/assets/icons/admin/user-round.svg';
+import logsIcon from '@/assets/icons/admin/logs.svg';
 
 const adminNavItems = [
     { label: 'Diplomas', path: '/admin/diplomas', icon: graduationCapIcon },

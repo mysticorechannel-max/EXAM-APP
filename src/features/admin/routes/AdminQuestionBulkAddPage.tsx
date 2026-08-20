@@ -3,11 +3,11 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import { useAdminExams } from '../hooks/useAdminExams';
 import { useCreateQuestion } from '@/features/questions/hooks/useQuestionMutations';
-import chevronsUpDown from '../../../lucideAdmin/chevrons-up-down.svg';
-import saveIcon from '../../../lucideAdmin/save.svg';
-import xIcon from '../../../lucideAdmin/x.svg';
-import copyPlusIcon from '../../../lucideAdmin/copy-plus.svg';
-import trash2RedIcon from '../../../lucideAdmin/trash-2-red.svg';
+import chevronsUpDown from '@/assets/icons/admin/chevrons-up-down.svg';
+import saveIcon from '@/assets/icons/admin/save.svg';
+import xIcon from '@/assets/icons/admin/x.svg';
+import copyPlusIcon from '@/assets/icons/admin/copy-plus.svg';
+import trash2RedIcon from '@/assets/icons/admin/trash-2-red.svg';
 
 interface QuestionTab {
     id: number;

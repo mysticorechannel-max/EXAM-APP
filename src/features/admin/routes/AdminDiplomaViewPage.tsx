@@ -3,9 +3,9 @@ import { useDiplomaDetails } from '@/features/diplomas/hooks/useDiplomaDetails';
 import { useDeleteDiploma, useToggleDiplomaImmutable } from '../hooks/useAdminDiplomaMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
 import { useState } from 'react';
-import banIcon from '../../../lucideAdmin/ban.svg';
-import penLineIcon from '../../../lucideAdmin/pen-line.svg';
-import trash2Icon from '../../../lucideAdmin/trash-2.svg';
+import banIcon from '@/assets/icons/admin/ban.svg';
+import penLineIcon from '@/assets/icons/admin/pen-line.svg';
+import trash2Icon from '@/assets/icons/admin/trash-2.svg';
 
 export function AdminDiplomaViewPage() {
     const { id } = useParams<{ id: string }>();

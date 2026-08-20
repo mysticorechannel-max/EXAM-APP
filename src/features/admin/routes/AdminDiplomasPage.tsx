@@ -6,9 +6,9 @@ import { useDeleteDiploma } from '../hooks/useAdminDiplomaMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
 import { DiplomaActionDropdown } from '../components/DiplomaActionDropdown';
 import { DiplomaSortDropdown } from '../components/DiplomaSortDropdown';
-import slidersIcon from '../../../lucideAdmin/sliders-horizontal.svg';
-import hideIcon from '../../../lucideAdmin/Hide.svg';
-import chevronsUpDown from '../../../lucideAdmin/chevrons-up-down.svg';
+import slidersIcon from '@/assets/icons/admin/sliders-horizontal.svg';
+import hideIcon from '@/assets/icons/admin/Hide.svg';
+import chevronsUpDown from '@/assets/icons/admin/chevrons-up-down.svg';
 import type { Diploma } from '@/features/diplomas/types/diploma.types';
 import type { DiplomasParams } from '@/features/diplomas/apis/diplomas.api';
 

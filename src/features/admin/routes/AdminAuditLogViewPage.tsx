@@ -6,7 +6,7 @@ import { unwrapPayload } from '@/shared/api/unwrap-response';
 import { useDeleteAuditLog } from '@/features/audit/hooks/useAuditLogMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
 import { useState } from 'react';
-import trash2Icon from '../../../lucideAdmin/trash-2.svg';
+import trash2Icon from '@/assets/icons/admin/trash-2.svg';
 import type { AuditLog } from '@/features/audit/types/audit.types';
 
 export function AdminAuditLogViewPage() {

@@ -5,9 +5,9 @@ import { useExamDetails } from '@/features/exams/hooks/useExamDetails';
 import { useDeleteQuestion, useToggleQuestionImmutable } from '@/features/questions/hooks/useQuestionMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
 import { isSuperAdmin } from '@/shared/utils';
-import banIcon from '../../../lucideAdmin/ban.svg';
-import penLineIcon from '../../../lucideAdmin/pen-line.svg';
-import trash2Icon from '../../../lucideAdmin/trash-2.svg';
+import banIcon from '@/assets/icons/admin/ban.svg';
+import penLineIcon from '@/assets/icons/admin/pen-line.svg';
+import trash2Icon from '@/assets/icons/admin/trash-2.svg';
 
 export function AdminQuestionViewPage() {
     const { examId, questionId } = useParams<{ examId: string; questionId: string }>();

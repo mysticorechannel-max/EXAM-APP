@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import { useDiplomas } from '../hooks/useDiplomas';
 import { DiplomasGrid } from '../components/DiplomasGrid';
-import graduationCapIcon from '../../../lucide/graduation-cap.svg';
+import graduationCapIcon from '@/assets/icons/common/graduation-cap.svg';
 
 const SCROLL_KEY = 'diplomas-scroll-position';
 const SHOW_ALL_KEY = 'diplomas-show-all';

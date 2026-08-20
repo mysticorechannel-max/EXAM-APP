@@ -5,8 +5,8 @@ import { cn } from '@/shared/utils';
 import { authService } from '@/features/auth/services/auth.service';
 import { ProfileForm } from '../components/ProfileForm';
 import { ChangePasswordForm } from '../components/ChangePasswordForm';
-import circleUserIcon from '../../../lucide/circle-user-round.svg';
-import lockIcon from '../../../lucide/lock.svg';
+import circleUserIcon from '@/assets/icons/common/circle-user-round.svg';
+import lockIcon from '@/assets/icons/common/lock.svg';
 
 type Tab = 'profile' | 'change-password';
 
