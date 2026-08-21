@@ -19,6 +19,7 @@ yarn-error.log*
 # Editor / OS
 .DS_Store
 *.swp
+.kiro
 
 # TypeScript build info
 *.tsbuildinfo
