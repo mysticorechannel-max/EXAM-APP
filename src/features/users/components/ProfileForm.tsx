@@ -55,16 +55,24 @@ export function ProfileForm() {
             if (!phone || phone === 'null' || phone === 'undefined') {
                 phone = localStorage.getItem('user_phone') || '';
             }
-            if (phone && !phone.startsWith('+')) {
-                // Handle Egyptian phone numbers
-                if (phone.startsWith('0')) {
-                    phone = '+2' + phone; // 01280041976 -> +201280041976
-                } else if (phone.length === 10 && phone.startsWith('1')) {
-                    phone = '+20' + phone; // 1280041976 -> +201280041976
-                } else if (phone.length === 11 && phone.startsWith('01')) {
-                    phone = '+2' + phone; // 01280041976 -> +201280041976
-                } else {
-                    phone = '+20' + phone; // fallback: assume Egyptian
+            if (phone) {
+                // Remove any spaces or dashes
+                phone = phone.replace(/[\s\-()]/g, '');
+                if (!phone.startsWith('+')) {
+                    // Handle Egyptian phone numbers
+                    if (phone.startsWith('002')) {
+                        phone = '+' + phone.slice(2); // 00201280041976 -> +201280041976
+                    } else if (phone.startsWith('2') && phone.length === 12) {
+                        phone = '+' + phone; // 201280041976 -> +201280041976
+                    } else if (phone.startsWith('01') && phone.length === 11) {
+                        phone = '+2' + phone; // 01280041976 -> +201280041976
+                    } else if (phone.startsWith('0') && phone.length === 11) {
+                        phone = '+2' + phone; // 01280041976 -> +201280041976
+                    } else if (phone.startsWith('1') && phone.length === 10) {
+                        phone = '+20' + phone; // 1280041976 -> +201280041976
+                    } else {
+                        phone = '+20' + phone; // fallback: assume Egyptian
+                    }
                 }
             }
             reset({

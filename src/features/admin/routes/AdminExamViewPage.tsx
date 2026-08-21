@@ -121,7 +121,7 @@ export function AdminExamViewPage() {
                 <div className="border border-gray-200 rounded px-6 py-6">
                     {/* Image */}
                     <div className="mb-6">
-                        <p className="mb-2 font-[Geist_Mono] text-xs text-amber-500">Image</p>
+                        <p className="mb-2 font-[Geist_Mono] text-xs text-gray-400">Image</p>
                         {exam.image ? (
                             <img src={exam.image} alt={exam.title} className="max-h-[300px] object-contain" />
                         ) : (
@@ -133,13 +133,13 @@ export function AdminExamViewPage() {
 
                     {/* Title */}
                     <div className="mb-6">
-                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Title</p>
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Title</p>
                         <p className="font-[Geist_Mono] text-sm text-gray-800">{exam.title}</p>
                     </div>
 
                     {/* Description */}
                     <div className="mb-6">
-                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Description</p>
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Description</p>
                         <p className="font-[Geist_Mono] text-sm leading-relaxed text-gray-700">
                             {exam.description || '—'}
                         </p>
@@ -147,7 +147,7 @@ export function AdminExamViewPage() {
 
                     {/* Diploma */}
                     <div className="mb-6">
-                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Diploma</p>
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Diploma</p>
                         {exam.diploma ? (
                             <Link to={`/admin/diplomas/${exam.diplomaId}`} className="font-[Geist_Mono] text-sm text-gray-800 hover:text-[#155DFC]">
                                 {exam.diploma.title} ↗
@@ -159,13 +159,13 @@ export function AdminExamViewPage() {
 
                     {/* Duration */}
                     <div className="mb-6">
-                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Duration</p>
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Duration</p>
                         <p className="font-[Geist_Mono] text-sm font-semibold text-gray-800">{exam.duration} Minutes</p>
                     </div>
 
                     {/* No. of Questions */}
                     <div className="mb-6">
-                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">No. of Questions</p>
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">No. of Questions</p>
                         <p className="font-[Geist_Mono] text-sm font-semibold text-gray-800">{exam.questionsCount}</p>
                     </div>
 

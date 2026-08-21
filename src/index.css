@@ -37,6 +37,11 @@
     border-radius: 0 !important;
   }
 
+  input,
+  textarea {
+    caret-color: #000;
+  }
+
   .radio-circle,
   .icon-circle {
     border-radius: 50% !important;

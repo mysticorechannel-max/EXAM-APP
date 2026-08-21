@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { MoreVertical, User, LogOut } from 'lucide-react';
+import { MoreVertical, User, LogOut, LayoutGrid } from 'lucide-react';
 import boltIcon from '@/assets/icons/common/bolt.svg';
 import { authService } from '@/features/auth/services/auth.service';
 import { useProfile } from '../hooks/useProfile';
@@ -116,8 +116,12 @@ export function SidebarUserCard({ variant = 'light' }: { variant?: 'light' | 'da
                         }}
                         className="flex w-full items-center gap-2 border-b border-gray-100 px-4 py-2.5 text-left font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50"
                     >
-                        <img src={boltIcon} alt="" className="h-[18px] w-[18px]" />
-                        Dashboard
+                        {isAdminContext ? (
+                            <LayoutGrid className="h-4 w-4" />
+                        ) : (
+                            <img src={boltIcon} alt="" className="h-[18px] w-[18px]" />
+                        )}
+                        {isAdminContext ? 'Application' : 'Dashboard'}
                     </button>
                     <button
                         type="button"

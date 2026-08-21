@@ -163,6 +163,14 @@ export function ResetPasswordForm() {
                     {mutation.isPending ? <Spinner size="sm" className="text-white" /> : 'Reset Password'}
                 </button>
             </form>
+
+            {/* Sign up link */}
+            <p className="mt-4 text-center font-[Geist_Mono] text-[13px] text-muted-foreground xl:text-[14px]">
+                Don&apos;t have an account?{' '}
+                <a href="/auth/register" className="font-medium text-[#155DFC] hover:text-[#1250D4]">
+                    Create yours
+                </a>
+            </p>
         </div>
     );
 }

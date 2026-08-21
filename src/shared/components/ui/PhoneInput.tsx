@@ -68,17 +68,19 @@ export function PhoneInput({
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     // Parse initial value (match the longest dial code first for accuracy)
+    const initializedRef = useRef(false);
     useEffect(() => {
-        if (value) {
+        if (value && !initializedRef.current) {
             const country = orderedCountries
                 .filter((c) => value.startsWith(c.dial))
                 .sort((a, b) => b.dial.length - a.dial.length)[0];
             if (country) {
                 setSelectedCountry(country);
                 setLocalNumber(value.slice(country.dial.length));
+                initializedRef.current = true;
             }
         }
-    }, []);
+    }, [value]);
 
     // Close dropdown on outside click
     useEffect(() => {
