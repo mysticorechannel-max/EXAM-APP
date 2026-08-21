@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { LogOut, ChevronLeft, User } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/shared/utils';
 import { authService } from '@/features/auth/services/auth.service';
 import { ProfileForm } from '../components/ProfileForm';
@@ -14,10 +15,12 @@ export function AccountSettingsPage() {
     const [activeTab, setActiveTab] = useState<Tab>('profile');
     const navigate = useNavigate();
     const location = useLocation();
+    const queryClient = useQueryClient();
     const isAdminContext = location.pathname.startsWith('/admin');
     const backPath = isAdminContext ? '/admin/diplomas' : '/dashboard/diplomas';
 
     const handleLogout = () => {
+        queryClient.clear();
         authService.clearAuthData();
         navigate('/auth/login');
     };

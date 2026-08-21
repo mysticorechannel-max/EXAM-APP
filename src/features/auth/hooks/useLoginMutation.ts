@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '../apis/auth.api';
 import { authService } from '../services/auth.service';
@@ -6,6 +6,7 @@ import type { LoginRequest, AuthTokens } from '../types/auth.types';
 
 export function useLoginMutation() {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: async (data: LoginRequest) => {
@@ -34,6 +35,9 @@ export function useLoginMutation() {
             return { accessToken, refreshToken, user } as AuthTokens;
         },
         onSuccess: (tokens) => {
+            // Clear all cached data from the previous session
+            queryClient.clear();
+
             authService.saveAuthData(tokens);
             if (authService.isAuthenticated()) {
                 const role = tokens.user?.role || '';

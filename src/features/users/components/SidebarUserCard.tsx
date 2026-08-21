@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { MoreVertical, User, LogOut, LayoutGrid } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
 import boltIcon from '@/assets/icons/common/bolt.svg';
 import { authService } from '@/features/auth/services/auth.service';
 import { useProfile } from '../hooks/useProfile';
@@ -11,6 +12,7 @@ export function SidebarUserCard({ variant = 'light' }: { variant?: 'light' | 'da
     const menuRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
     const location = useLocation();
+    const queryClient = useQueryClient();
     const isAdminContext = location.pathname.startsWith('/admin');
 
     useEffect(() => {
@@ -24,6 +26,7 @@ export function SidebarUserCard({ variant = 'light' }: { variant?: 'light' | 'da
     }, []);
 
     const handleLogout = () => {
+        queryClient.clear();
         authService.clearAuthData();
         navigate('/auth/login');
     };
