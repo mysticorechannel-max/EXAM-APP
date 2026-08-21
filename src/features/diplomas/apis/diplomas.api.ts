@@ -31,11 +31,11 @@ interface DiplomaDetailResponse {
     };
 }
 
-interface DiplomaWriteResponse {
+export interface DiplomaWriteResponse {
     diploma: Diploma;
 }
 
-interface DiplomaDeleteResponse {
+export interface DiplomaDeleteResponse {
     message: string;
 }
 
