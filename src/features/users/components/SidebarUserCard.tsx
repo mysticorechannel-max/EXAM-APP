@@ -41,7 +41,9 @@ export function SidebarUserCard({ variant = 'light' }: { variant?: 'light' | 'da
     }
 
     const storedUser = getStoredUser();
-    const displayUser = user || storedUser;
+    // Only use localStorage fallback while the API is still loading
+    // Once the query has resolved (success or error), rely only on API data
+    const displayUser = user ?? (isLoading ? storedUser : null);
 
     if (isLoading && !displayUser) {
         return (

@@ -30,6 +30,7 @@ export const authService = {
         localStorage.removeItem(ACCESS_TOKEN_KEY);
         localStorage.removeItem(REFRESH_TOKEN_KEY);
         localStorage.removeItem(USER_KEY);
+        localStorage.removeItem('user_phone');
     },
 
     getAccessToken(): string | null {
