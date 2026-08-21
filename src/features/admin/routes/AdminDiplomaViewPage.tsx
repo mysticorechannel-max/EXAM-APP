@@ -95,7 +95,7 @@ export function AdminDiplomaViewPage() {
                 <div className="border border-gray-200 rounded px-6 py-6">
                     {/* Image */}
                     <div className="mb-6">
-                        <p className="mb-2 font-[Geist_Mono] text-xs text-amber-500">Image</p>
+                        <p className="mb-2 font-[Geist_Mono] text-xs text-gray-400">Image</p>
                         {diploma.image ? (
                             <img src={diploma.image} alt={diploma.title} className="max-h-[300px] object-contain" />
                         ) : (
@@ -107,13 +107,13 @@ export function AdminDiplomaViewPage() {
 
                     {/* Title */}
                     <div className="mb-6">
-                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Title</p>
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Title</p>
                         <p className="font-[Geist_Mono] text-sm text-gray-800">{diploma.title}</p>
                     </div>
 
                     {/* Description */}
                     <div>
-                        <p className="mb-1 font-[Geist_Mono] text-xs text-amber-500">Description</p>
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Description</p>
                         <p className="font-[Geist_Mono] text-sm text-gray-700 leading-relaxed">
                             {diploma.description || '—'}
                         </p>

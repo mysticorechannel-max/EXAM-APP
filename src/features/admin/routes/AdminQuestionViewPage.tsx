@@ -4,7 +4,6 @@ import { useQuestions } from '@/features/questions/hooks/useQuestions';
 import { useExamDetails } from '@/features/exams/hooks/useExamDetails';
 import { useDeleteQuestion, useToggleQuestionImmutable } from '@/features/questions/hooks/useQuestionMutations';
 import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
-import { isSuperAdmin } from '@/shared/utils';
 import banIcon from '@/assets/icons/admin/ban.svg';
 import penLineIcon from '@/assets/icons/admin/pen-line.svg';
 import trash2Icon from '@/assets/icons/admin/trash-2.svg';
@@ -74,17 +73,15 @@ export function AdminQuestionViewPage() {
                     )}
                 </div>
                 <div className="flex items-center gap-2">
-                    {isSuperAdmin() && (
-                        <button
-                            type="button"
-                            onClick={() => immutableMutation.mutate({ id: question.id, immutable: true })}
-                            disabled={immutableMutation.isPending}
-                            className="flex h-[36px] cursor-pointer items-center gap-2 border border-gray-300 bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-                        >
-                            <img src={banIcon} alt="" className="h-4 w-4" />
-                            Immutable
-                        </button>
-                    )}
+                    <button
+                        type="button"
+                        onClick={() => immutableMutation.mutate({ id: question.id, immutable: true })}
+                        disabled={immutableMutation.isPending}
+                        className="flex h-[36px] cursor-pointer items-center gap-2 border border-gray-300 bg-white px-4 font-[Geist_Mono] text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                    >
+                        <img src={banIcon} alt="" className="h-4 w-4" />
+                        Immutable
+                    </button>
                     <button
                         type="button"
                         onClick={() => navigate(`/admin/exams/${examId}/questions/${questionId}/edit`)}
@@ -105,29 +102,31 @@ export function AdminQuestionViewPage() {
             </div>
 
             {/* Body */}
-            <div className="border-t border-gray-200 bg-white px-6 py-6">
-                {/* Headline */}
-                <div className="mb-6">
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Headline</p>
-                    <p className="font-[Geist_Mono] text-sm text-gray-800">{question.text}</p>
-                </div>
+            <div className="bg-[#F3F4F6] px-6 py-6">
+                <div className="border border-gray-200 bg-white px-6 py-6">
+                    {/* Headline */}
+                    <div className="mb-6">
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Headline</p>
+                        <p className="font-[Geist_Mono] text-sm text-gray-800">{question.text}</p>
+                    </div>
 
-                {/* Exam */}
-                <div className="mb-6">
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Exam</p>
-                    {exam ? (
-                        <Link to={`/admin/exams/${examId}`} className="font-[Geist_Mono] text-sm text-gray-800 hover:text-[#155DFC]">
-                            {exam.title} ↗
-                        </Link>
-                    ) : (
-                        <p className="font-[Geist_Mono] text-sm text-gray-800">—</p>
-                    )}
-                </div>
+                    {/* Exam */}
+                    <div className="mb-6">
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Exam</p>
+                        {exam ? (
+                            <Link to={`/admin/exams/${examId}`} className="font-[Geist_Mono] text-sm text-gray-800 hover:text-[#155DFC]">
+                                {exam.title} ↗
+                            </Link>
+                        ) : (
+                            <p className="font-[Geist_Mono] text-sm text-gray-800">—</p>
+                        )}
+                    </div>
 
-                {/* Answers */}
-                <div className="mb-6">
-                    <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Answers</p>
-                    <p className="font-[Geist_Mono] text-sm font-semibold text-gray-800">{question.answers?.length || 0}</p>
+                    {/* Answers */}
+                    <div className="mb-6">
+                        <p className="mb-1 font-[Geist_Mono] text-xs text-gray-400">Answers</p>
+                        <p className="font-[Geist_Mono] text-sm font-semibold text-gray-800">{question.answers?.length || 0}</p>
+                    </div>
                 </div>
             </div>
 

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useRef, type FormEvent } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useDiplomaDetails } from '@/features/diplomas/hooks/useDiplomaDetails';
 import { useCreateDiploma, useUpdateDiploma } from '../hooks/useAdminDiplomaMutations';
@@ -43,11 +43,40 @@ function DiplomaForm({ diploma, isEdit, onCancel, onSuccess }: DiplomaFormProps)
     const [title, setTitle] = useState(diploma?.title ?? '');
     const [description, setDescription] = useState(diploma?.description ?? '');
     const [image, setImage] = useState(diploma?.image ?? '');
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(diploma?.image ?? null);
     const [error, setError] = useState('');
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const createMutation = useCreateDiploma();
     const updateMutation = useUpdateDiploma();
     const isPending = createMutation.isPending || updateMutation.isPending;
+
+    const handleFileSelect = (file: File) => {
+        if (!file.type.startsWith('image/')) {
+            setError('Please select a valid image file');
+            return;
+        }
+        setImageFile(file);
+        setError('');
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const result = e.target?.result as string;
+            setImagePreview(result);
+            setImage(result);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (file) handleFileSelect(file);
+    };
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+    };
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -124,14 +153,37 @@ function DiplomaForm({ diploma, isEdit, onCancel, onSuccess }: DiplomaFormProps)
                         {/* Image */}
                         <div className="flex flex-col gap-2 p-4">
                             <label className="font-[Geist_Mono] text-base font-medium text-gray-700">Image</label>
-                            <div className="flex items-center gap-4 border border-[#E5E7EB] bg-white px-6 py-8">
-                                <img src={fileImageIcon} alt="" className="h-10 w-10" />
+                            <div
+                                onClick={() => fileInputRef.current?.click()}
+                                onDrop={handleDrop}
+                                onDragOver={handleDragOver}
+                                className="flex cursor-pointer items-center gap-4 border border-dashed border-[#E5E7EB] bg-white px-6 py-8 transition-colors hover:border-[#155DFC] hover:bg-blue-50/30"
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') fileInputRef.current?.click(); }}
+                                aria-label="Upload image"
+                            >
+                                {imagePreview ? (
+                                    <img src={imagePreview} alt="Preview" className="h-16 w-16 object-cover rounded" />
+                                ) : (
+                                    <img src={fileImageIcon} alt="" className="h-10 w-10" />
+                                )}
                                 <div className="flex flex-1 items-center justify-center gap-2">
                                     <img src={cloudUploadIcon} alt="" className="h-5 w-5" />
                                     <span className="font-[Geist_Mono] text-sm text-gray-500">
-                                        Drop an image here or <span className="text-[#155DFC]">select from your computer</span>
+                                        {imageFile ? imageFile.name : <>Drop an image here or <span className="text-[#155DFC]">select from your computer</span></>}
                                     </span>
                                 </div>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) handleFileSelect(file);
+                                    }}
+                                />
                             </div>
                         </div>
 
